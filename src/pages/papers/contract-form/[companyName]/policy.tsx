@@ -7,8 +7,6 @@ import { useEffect, useState } from "react";
 export default function Policy() {
   const router = useRouter();
   const companyName = router.query.companyName;
-  const today = new Date();
-  const formmatedDate = `${today.getDate()}/${today.getMonth()}/${today.getFullYear()}`;
   const [formPolicies, setFormPolicies] = useState<Array<FormPolicyVO>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   useEffect(() => {
@@ -33,27 +31,28 @@ export default function Policy() {
     <>
       <h1>{companyName} Policies</h1>
       <div>
-      {formPolicies.map((formPolicy) => (
-        <div key={formPolicy.number}>
-          <p>
-            {formPolicy.number}. {formPolicy.title}
-          </p>
-          <p>{formPolicy.contentHead}</p>
-          <ul>
-            {formPolicy.formPolicyDetailArray.map((formPolicyDetail) => (
-              <li key={formPolicyDetail.number}>
-                {formPolicyDetail.content}
-              </li>
-            ))}
-          </ul>
-          <p>{formPolicy.contentTail}</p>
-          <br />
-        </div>
-      ))}
+        {formPolicies.map((formPolicy) => (
+          <div key={formPolicy.number}>
+            <p>
+              {formPolicy.number}. {formPolicy.title}
+            </p>
+            <p>{formPolicy.contentHead}</p>
+            <ul>
+              {formPolicy.formPolicyDetailArray.map((formPolicyDetail) => (
+                <li key={formPolicyDetail.number}>
+                  {formPolicyDetail.content}
+                </li>
+              ))}
+            </ul>
+            <p>{formPolicy.contentTail}</p>
+            <br />
+          </div>
+        ))}
       </div>
       <div>
         <label>
-          <input type="checkbox"/>  By checking here, I declare that I will abide by company policies.
+          <input type="checkbox" /> By checking here, I declare that I will
+          abide by company policies.
         </label>
       </div>
       <NavigationButton

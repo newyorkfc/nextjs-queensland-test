@@ -7,8 +7,6 @@ import { useEffect, useState } from "react";
 export default function Personal() {
   const router = useRouter();
   const companyName = router.query.companyName;
-  const today = new Date();
-  const formmatedDate = `${today.getDate()}/${today.getMonth()}/${today.getFullYear()}`;
 
   const [selectedTitle, setSelectedTitle] = useState("");
   const [locations, setLocations] = useState<Array<LocationVO>>([]);
