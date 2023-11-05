@@ -32,32 +32,39 @@ export default function Guideline() {
   }
 
   return (
-    <>
-      <h1>Work Health & Safety Guidelines</h1>
-      <div>
-        {formGuidelines.map((formGuideline) => (
-          <div key={formGuideline.number}>
-            <p
-              style={{
-                whiteSpace: "pre-line",
-              }}
-            >
-              {formGuideline.number}. {formGuideline.title}
-              <br />
-              {formGuideline.content}
-            </p>
+    <section className="paper guideline">
+      <div className="container">
+        <div className="tit-area">
+          <h1 className="h1">Work Health & Safety Guidelines</h1>
+        </div>
+        <div className="content">
+          <div className="col">
+            {formGuidelines.map((formGuideline) => (
+              <div key={formGuideline.number}>
+                <p
+                  style={{
+                    whiteSpace: "pre-line",
+                  }}
+                >
+                  {formGuideline.number}. {formGuideline.title}
+                  <br />
+                  {formGuideline.content}
+                </p>
+              </div>
+            ))}
           </div>
-        ))}
+
+          <div className="agree-wrap">
+            <input type="checkbox" id="check1" />
+            <label htmlFor="check1">I have read and understood.</label>
+          </div>
+        </div>
+        <NavigationButton
+          prevPath={`/papers/contract-form/${companyName}/schedule`}
+          nextPath={`/papers/contract-form/${companyName}/checklist`}
+          currentPage={6}
+        />
       </div>
-      
-      <div>
-        <input type="checkbox"/> I have read and understood.
-      </div>
-      <NavigationButton
-        prevPath={`/papers/contract-form/${companyName}/schedule`}
-        nextPath={`/papers/contract-form/${companyName}/checklist`}
-        currentPage={6}
-      />
-    </>
+    </section>
   );
 }

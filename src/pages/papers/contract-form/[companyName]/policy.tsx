@@ -28,38 +28,43 @@ export default function Policy() {
     return <div>Loading...</div>;
   }
   return (
-    <>
-      <h1>{companyName} Policies</h1>
-      <div>
-        {formPolicies.map((formPolicy) => (
-          <div key={formPolicy.number}>
-            <p>
-              {formPolicy.number}. {formPolicy.title}
-            </p>
-            <p>{formPolicy.contentHead}</p>
-            <ul>
-              {formPolicy.formPolicyDetailArray.map((formPolicyDetail) => (
-                <li key={formPolicyDetail.number}>
-                  {formPolicyDetail.content}
-                </li>
-              ))}
-            </ul>
-            <p>{formPolicy.contentTail}</p>
-            <br />
+    <section className="paper">
+      <div className="container">
+        <div className="tit-area">
+          <h1 className="h1">{companyName} Policies</h1>
+        </div>
+        <div className="content">
+          <div className=" col">
+            {formPolicies.map((formPolicy) => (
+              <div key={formPolicy.number}>
+                <h3 className="h3">
+                  {formPolicy.number}. {formPolicy.title}
+                </h3>
+                <p>{formPolicy.contentHead}</p>
+                <ul>
+                  {formPolicy.formPolicyDetailArray.map((formPolicyDetail) => (
+                    <li key={formPolicyDetail.number}>
+                      {formPolicyDetail.content}
+                    </li>
+                  ))}
+                </ul>
+                <p>{formPolicy.contentTail}</p>
+              </div>
+            ))}
           </div>
-        ))}
+          <div className="agree-wrap">
+            <input type="checkbox" id="check1" />
+            <label htmlFor="check1">
+              By checking here, I declare that I will abide by company policies.
+            </label>
+          </div>
+          <NavigationButton
+            prevPath={`/papers/contract-form/${companyName}/personal`}
+            nextPath={`/papers/contract-form/${companyName}/agree`}
+            currentPage={3}
+          />
+        </div>
       </div>
-      <div>
-        <label>
-          <input type="checkbox" /> By checking here, I declare that I will
-          abide by company policies.
-        </label>
-      </div>
-      <NavigationButton
-        prevPath={`/papers/contract-form/${companyName}/personal`}
-        nextPath={`/papers/contract-form/${companyName}/agree`}
-        currentPage={3}
-      />
-    </>
+    </section>
   );
 }

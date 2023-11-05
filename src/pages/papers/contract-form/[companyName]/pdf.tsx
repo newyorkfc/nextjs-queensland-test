@@ -12,27 +12,33 @@ export default function Pdf() {
     setNumPages(numPages);
   }
   return (
-    <>
-      <h1>{companyName}</h1>
-      <div>
-        <Document
-          file={pdfUrl}
-          onLoadSuccess={onDocumentLoadSuccess}
-          key={numPages}
-        >
-          {Array.from(new Array(numPages), (el, index) => (
-            <Page
-              key={`page_${index + 1}`}
-              pageNumber={index + 1}
-              renderTextLayer={false}
-            />
-          ))}
-        </Document>
+    <section className="paper">
+      <div className="container">
+        <div className="tit-area">
+          <h1 className="h1">{companyName}</h1>
+        </div>
+        <div className="content">
+          <div>
+            <Document
+              file={pdfUrl}
+              onLoadSuccess={onDocumentLoadSuccess}
+              key={numPages}
+            >
+              {Array.from(new Array(numPages), (el, index) => (
+                <Page
+                  key={`page_${index + 1}`}
+                  pageNumber={index + 1}
+                  renderTextLayer={false}
+                />
+              ))}
+            </Document>
+          </div>
+        </div>
+        <NavigationButton
+          nextPath={`/papers/contract-form/${companyName}/personal`}
+          currentPage={1}
+        />
       </div>
-      <NavigationButton
-        nextPath={`/papers/contract-form/${companyName}/personal`}
-        currentPage={1}
-      />
-    </>
+    </section>
   );
 }
