@@ -1,9 +1,12 @@
-import { WorkerVO } from "app/customers/worker/model";
+import { WorkerViewVO } from "app/customers/worker/model";
 import axios from "axios";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export default function WorkerList() {
-  const [workers, setWorkers] = useState<Array<WorkerVO>>([]);
+  const router = useRouter();
+  const [workers, setWorkers] = useState<Array<WorkerViewVO>>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -13,10 +16,16 @@ export default function WorkerList() {
         setWorkers(response.data.array);
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchData();
   });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return <></>;
 }

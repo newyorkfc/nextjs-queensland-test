@@ -27,6 +27,11 @@ export default function Policy() {
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
+  const midIndex = Math.ceil(formPolicies.length / 2);
+  const firstHalfPolicies = formPolicies.slice(0, midIndex);
+  const secondHalfPolicies = formPolicies.slice(midIndex);
+
   return (
     <section className="paper">
       <div className="container">
@@ -35,7 +40,43 @@ export default function Policy() {
         </div>
         <div className="content">
           <div className=" col">
-            {formPolicies.map((formPolicy) => (
+            {firstHalfPolicies.map((formPolicy) => (
+              <div key={formPolicy.number}>
+                <h3 className="h3">
+                  {formPolicy.number}. {formPolicy.title}
+                </h3>
+                <p>{formPolicy.contentHead}</p>
+                <ul>
+                  {formPolicy.formPolicyDetailArray.map((formPolicyDetail) => (
+                    <li key={formPolicyDetail.number}>
+                      {formPolicyDetail.content}
+                    </li>
+                  ))}
+                </ul>
+                <p>{formPolicy.contentTail}</p>
+              </div>
+            ))}
+          </div>
+          <div className=" col">
+            {firstHalfPolicies.map((formPolicy) => (
+              <div key={formPolicy.number}>
+                <h3 className="h3">
+                  {formPolicy.number}. {formPolicy.title}
+                </h3>
+                <p>{formPolicy.contentHead}</p>
+                <ul>
+                  {formPolicy.formPolicyDetailArray.map((formPolicyDetail) => (
+                    <li key={formPolicyDetail.number}>
+                      {formPolicyDetail.content}
+                    </li>
+                  ))}
+                </ul>
+                <p>{formPolicy.contentTail}</p>
+              </div>
+            ))}
+          </div>
+          <div className=" col">
+            {secondHalfPolicies.map((formPolicy) => (
               <div key={formPolicy.number}>
                 <h3 className="h3">
                   {formPolicy.number}. {formPolicy.title}
