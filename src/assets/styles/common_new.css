@@ -228,7 +228,7 @@ input[id="check1"]:checked + label::after {
   fill: #333;
 }
 
-/*.content .col {
+/* .content .col {
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 4rem;
@@ -253,7 +253,7 @@ input[id="check1"]:checked + label::after {
 }
 .guideline .col > div:nth-child(6) {
   grid-row: 6;
-}*/
+} */
 /* personal ========== */
 .personal dl {
   display: flex;
