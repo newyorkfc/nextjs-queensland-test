@@ -58,24 +58,6 @@ export default function Policy() {
             ))}
           </div>
           <div className=" col">
-            {firstHalfPolicies.map((formPolicy) => (
-              <div key={formPolicy.number}>
-                <h3 className="h3">
-                  {formPolicy.number}. {formPolicy.title}
-                </h3>
-                <p>{formPolicy.contentHead}</p>
-                <ul>
-                  {formPolicy.formPolicyDetailArray.map((formPolicyDetail) => (
-                    <li key={formPolicyDetail.number}>
-                      {formPolicyDetail.content}
-                    </li>
-                  ))}
-                </ul>
-                <p>{formPolicy.contentTail}</p>
-              </div>
-            ))}
-          </div>
-          <div className=" col">
             {secondHalfPolicies.map((formPolicy) => (
               <div key={formPolicy.number}>
                 <h3 className="h3">

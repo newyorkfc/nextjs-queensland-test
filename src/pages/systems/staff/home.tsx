@@ -13,7 +13,7 @@ export default function StaffHome() {
           <button>Manage Teams</button>
         </li>
         <li>
-          <button>Manage Workers</button>
+          <button onClick={()=>{router.push("/customers/worker/list")}}>Manage Workers</button>
         </li>
       </ul>
     </>

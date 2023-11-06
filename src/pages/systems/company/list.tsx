@@ -32,23 +32,22 @@ export default function CompanyList() {
     <>
       <h1>Company List</h1>
       <table>
-        <thead></thead>
-        <tr>
-          <th>name</th>
-          <th>address</th>
-          <th>url</th>
-        </tr>
+        <thead>
+          <tr>
+            <th>name</th>
+            <th>address</th>
+            <th>url</th>
+          </tr>
+        </thead>
         <tbody>
           {companies.map((company, index) => {
             const url = `${process.env.NEXT_PUBLIC_FRONT_URL}/systems/company/${company.name}`;
             return (
-              <tr key={index}>
+              <tr key={index} id={company.id}>
                 <td>{company.name}</td>
                 <td>{company.address}</td>
                 <td>
-                  <Link href={url}>
-                    {url}
-                  </Link>
+                  <Link href={url}>{url}</Link>
                 </td>
               </tr>
             );

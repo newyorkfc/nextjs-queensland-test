@@ -35,6 +35,9 @@ export interface WorkerViewVO{
     cellPhone: string|null
     taxFileNumber: string|null
     birthDate: string|null
+    gender: string|null
+    nationality: string|null
+    passportNumber: string|null
     visaGrantNumber: string|null
     fundName: string|null
     memberNumber: string|null
