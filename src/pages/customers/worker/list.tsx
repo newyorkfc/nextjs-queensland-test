@@ -94,7 +94,7 @@ export default function WorkerList() {
         <tfoot>
           {workers.length === 0 && (
             <tr>
-              <td colSpan={24}>등록된 데이터가 없습니다.</td>
+              <td colSpan={24}>No data available</td>
             </tr>
           )}
         </tfoot>

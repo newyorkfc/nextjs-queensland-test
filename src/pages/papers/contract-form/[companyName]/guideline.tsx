@@ -31,7 +31,6 @@ export default function Guideline() {
     return <div>Loading...</div>;
   }
 
-
   const midIndex = Math.ceil(formGuidelines.length / 2);
   const firstHalfGuidelines = formGuidelines.slice(0, midIndex);
   const secondHalfGuidelines = formGuidelines.slice(midIndex);
@@ -43,35 +42,39 @@ export default function Guideline() {
           <h1 className="h1">Work Health & Safety Guidelines</h1>
         </div>
         <div className="content">
-          <div className="col">
-            {firstHalfGuidelines.map((formGuideline) => (
-              <div key={formGuideline.number}>
-                <p
-                  style={{
-                    whiteSpace: "pre-line",
-                  }}
-                >
-                  {formGuideline.number}. {formGuideline.title}
-                  <br />
-                  {formGuideline.content}
-                </p>
-              </div>
-            ))}
-          </div>
-          <div className="col">
-            {secondHalfGuidelines.map((formGuideline) => (
-              <div key={formGuideline.number}>
-                <p
-                  style={{
-                    whiteSpace: "pre-line",
-                  }}
-                >
-                  {formGuideline.number}. {formGuideline.title}
-                  <br />
-                  {formGuideline.content}
-                </p>
-              </div>
-            ))}
+          <div className="col-wrap">
+            <div className="col">
+              {firstHalfGuidelines.map((formGuideline) => (
+                <div key={formGuideline.number}>
+                  <h3 className="h3">
+                    {formGuideline.number}. {formGuideline.title}
+                  </h3>
+                  <p
+                    style={{
+                      whiteSpace: "pre-line",
+                    }}
+                  >
+                    {formGuideline.content}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <div className="col">
+              {secondHalfGuidelines.map((formGuideline) => (
+                <div key={formGuideline.number}>
+                  <h3 className="h3">
+                    {formGuideline.number}. {formGuideline.title}
+                  </h3>
+                  <p
+                    style={{
+                      whiteSpace: "pre-line",
+                    }}
+                  >
+                    {formGuideline.content}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="agree-wrap">

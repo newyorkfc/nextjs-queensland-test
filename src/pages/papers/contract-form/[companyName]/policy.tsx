@@ -1,5 +1,5 @@
 import { FormPolicyVO } from "app/papers/contract-form/model";
-import axios, { formToJSON } from "axios";
+import axios from "axios";
 import NavigationButton from "components/papers/contract-form/navigation-button";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -39,41 +39,47 @@ export default function Policy() {
           <h1 className="h1">{companyName} Policies</h1>
         </div>
         <div className="content">
-          <div className=" col">
-            {firstHalfPolicies.map((formPolicy) => (
-              <div key={formPolicy.number}>
-                <h3 className="h3">
-                  {formPolicy.number}. {formPolicy.title}
-                </h3>
-                <p>{formPolicy.contentHead}</p>
-                <ul>
-                  {formPolicy.formPolicyDetailArray.map((formPolicyDetail) => (
-                    <li key={formPolicyDetail.number}>
-                      {formPolicyDetail.content}
-                    </li>
-                  ))}
-                </ul>
-                <p>{formPolicy.contentTail}</p>
-              </div>
-            ))}
-          </div>
-          <div className=" col">
-            {secondHalfPolicies.map((formPolicy) => (
-              <div key={formPolicy.number}>
-                <h3 className="h3">
-                  {formPolicy.number}. {formPolicy.title}
-                </h3>
-                <p>{formPolicy.contentHead}</p>
-                <ul>
-                  {formPolicy.formPolicyDetailArray.map((formPolicyDetail) => (
-                    <li key={formPolicyDetail.number}>
-                      {formPolicyDetail.content}
-                    </li>
-                  ))}
-                </ul>
-                <p>{formPolicy.contentTail}</p>
-              </div>
-            ))}
+          <div className="col-wrap">
+            <div className=" col">
+              {firstHalfPolicies.map((formPolicy) => (
+                <div key={formPolicy.number}>
+                  <h3 className="h3">
+                    {formPolicy.number}. {formPolicy.title}
+                  </h3>
+                  <p>{formPolicy.contentHead}</p>
+                  <ul>
+                    {formPolicy.formPolicyDetailArray.map(
+                      (formPolicyDetail) => (
+                        <li key={formPolicyDetail.number}>
+                          {formPolicyDetail.content}
+                        </li>
+                      )
+                    )}
+                  </ul>
+                  <p>{formPolicy.contentTail}</p>
+                </div>
+              ))}
+            </div>
+            <div className=" col">
+              {secondHalfPolicies.map((formPolicy) => (
+                <div key={formPolicy.number}>
+                  <h3 className="h3">
+                    {formPolicy.number}. {formPolicy.title}
+                  </h3>
+                  <p>{formPolicy.contentHead}</p>
+                  <ul>
+                    {formPolicy.formPolicyDetailArray.map(
+                      (formPolicyDetail) => (
+                        <li key={formPolicyDetail.number}>
+                          {formPolicyDetail.content}
+                        </li>
+                      )
+                    )}
+                  </ul>
+                  <p>{formPolicy.contentTail}</p>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="agree-wrap">
             <input type="checkbox" id="check1" />

@@ -56,7 +56,7 @@ export default function CompanyList() {
         <tfoot>
           {companies.length === 0 && (
             <tr>
-              <td colSpan={3}>등록된 데이터가 없습니다.</td>
+              <td colSpan={3}>No data available</td>
             </tr>
           )}
         </tfoot>
