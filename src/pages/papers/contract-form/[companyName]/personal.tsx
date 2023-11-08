@@ -15,6 +15,10 @@ export default function Personal() {
   const [birthDate, setBirthDate] = useState("");
   const [selectedGender, setSelectedGender] = useState("");
 
+  const [suburbQuery, setSuburbQuery] = useState("");
+  const [suburbs, setSuburbs] = useState<Array<SuburbVO | null>>([]);
+  const [selectedSuburb, setSelectedSuburb] = useState<SuburbVO | null>(null);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -59,6 +63,41 @@ export default function Personal() {
   };
   const handleGenderChange = (e) => {
     setSelectedGender(e.target.value);
+  };
+
+  interface StateVO {
+    name: string | null;
+    abbreviation: string | null;
+  }
+  interface SuburbVO {
+    name: string | null;
+    postcode: number | null;
+    state: StateVO | null;
+    locality: string | null;
+    latitude: number | null;
+    longtiude: number | null;
+  }
+
+  const handleSubrubInputChange = async (event) => {
+    const value = event.target.value;
+    setSuburbQuery(value);
+    setSelectedSuburb(null);
+
+    if (value.length > 2) {
+      try {
+        const response = await axios.get(`/api/suburbs?q=${value}`);
+        setSuburbs(response.data);
+      } catch (error) {
+        console.error(error);
+        setSuburbs([]);
+      }
+    } else {
+      setSuburbs([]);
+    }
+  };
+  const handleSuburbClick = (suburb: SuburbVO) => {
+    setSelectedSuburb(suburb);
+    setSuburbs([]);
   };
 
   return (
@@ -213,7 +252,65 @@ export default function Personal() {
               <label htmlFor="address">Address</label>
             </dt>
             <dd>
-              <input type="text" className="input-box" id="address" />
+              {/* <input type="text" className="input-box" id="address" /> */}
+              {/* 위 코드 대신 아래 코드로 대체*/}
+              <dl>
+                <dt>
+                  <label htmlFor="street">Street</label>
+                </dt>
+                <dd>
+                  <input type="text" id="street" className="input-box"></input>
+                </dd>
+                <dt>
+                  <label htmlFor="suburb">Suburb / Postcode</label>
+                </dt>
+                <dd>
+                  <input
+                    type="text"
+                    id="suburb"
+                    className="input-box"
+                    value={
+                      selectedSuburb
+                        ? `${selectedSuburb.name}, ${selectedSuburb.state?.abbreviation} ${selectedSuburb.postcode}`
+                        : suburbQuery
+                    }
+                    onChange={handleSubrubInputChange}
+                    autoComplete="off"
+                  />
+                  {suburbs.length > 0 && (
+                    <ul>
+                      {suburbs.map((suburb, index) => {
+                        const matchIndex = suburb.name
+                          .toLowerCase()
+                          .indexOf(suburbQuery.toLowerCase());
+                        const beforeMatchText = suburb.name.slice(
+                          0,
+                          matchIndex
+                        );
+                        const matchText = suburb.name.slice(
+                          matchIndex,
+                          matchIndex + suburbQuery.length
+                        );
+                        const afterMatchText = suburb.name.slice(
+                          matchIndex + suburbQuery.length
+                        );
+                        return (
+                          <li
+                            key={index}
+                            onClick={() => handleSuburbClick(suburb)}
+                          >
+                            {beforeMatchText}
+                            <strong>{matchText}</strong>
+                            {afterMatchText}, {suburb.state?.abbreviation}{" "}
+                            {suburb.postcode}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </dd>
+              </dl>
+              {/* 여기까지 */}
             </dd>
           </dl>
           <dl>
