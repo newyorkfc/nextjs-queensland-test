@@ -251,67 +251,60 @@ export default function Personal() {
             <dt>
               <label htmlFor="address">Address</label>
             </dt>
-            <dd>
+            <dd className="flex">
               {/* <input type="text" className="input-box" id="address" /> */}
               {/* 위 코드 대신 아래 코드로 대체*/}
-              <dl>
-                <dt>
-                  <label htmlFor="street">Street</label>
-                </dt>
-                <dd>
-                  <input type="text" id="street" className="input-box"></input>
-                </dd>
-                <dt>
-                  <label htmlFor="suburb">Suburb / Postcode</label>
-                </dt>
-                <dd>
-                  <input
-                    type="text"
-                    id="suburb"
-                    className="input-box"
-                    value={
-                      selectedSuburb
-                        ? `${selectedSuburb.name}, ${selectedSuburb.state?.abbreviation} ${selectedSuburb.postcode}`
-                        : suburbQuery
-                    }
-                    onChange={handleSubrubInputChange}
-                    autoComplete="off"
-                  />
-                  {suburbs.length > 0 && (
-                    <ul>
-                      {suburbs.map((suburb, index) => {
-                        const matchIndex = suburb.name
-                          .toLowerCase()
-                          .indexOf(suburbQuery.toLowerCase());
-                        const beforeMatchText = suburb.name.slice(
-                          0,
-                          matchIndex
-                        );
-                        const matchText = suburb.name.slice(
-                          matchIndex,
-                          matchIndex + suburbQuery.length
-                        );
-                        const afterMatchText = suburb.name.slice(
-                          matchIndex + suburbQuery.length
-                        );
-                        return (
-                          <li
-                            key={index}
-                            onClick={() => handleSuburbClick(suburb)}
-                          >
-                            {beforeMatchText}
-                            <strong>{matchText}</strong>
-                            {afterMatchText}, {suburb.state?.abbreviation}{" "}
-                            {suburb.postcode}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  )}
-                </dd>
-              </dl>
-              {/* 여기까지 */}
+              <label htmlFor="street">Street</label>
+              <input type="text" id="street" className="input-box md"></input>
             </dd>
+            <dd className="flex">
+              <label htmlFor="suburb">Suburb / Postcode</label>
+              <div className="search-list">
+                <input
+                  type="text"
+                  id="suburb"
+                  className="input-box md"
+                  value={
+                    selectedSuburb
+                      ? `${selectedSuburb.name}, ${selectedSuburb.state?.abbreviation} ${selectedSuburb.postcode}`
+                      : suburbQuery
+                  }
+                  onChange={handleSubrubInputChange}
+                  autoComplete="off"
+                />
+                {suburbs.length > 0 && (
+                  <ul>
+                    {suburbs.map((suburb, index) => {
+                      const matchIndex = suburb.name
+                        .toLowerCase()
+                        .indexOf(suburbQuery.toLowerCase());
+                      const beforeMatchText = suburb.name.slice(0, matchIndex);
+                      const matchText = suburb.name.slice(
+                        matchIndex,
+                        matchIndex + suburbQuery.length
+                      );
+                      const afterMatchText = suburb.name.slice(
+                        matchIndex + suburbQuery.length
+                      );
+                      return (
+                        <li
+                          key={index}
+                          onClick={() => handleSuburbClick(suburb)}
+                        >
+                          <span>{beforeMatchText}</span>
+                          <strong>{matchText}</strong>
+                          <span>
+                            {afterMatchText}, {suburb.state?.abbreviation}
+                            {suburb.postcode}
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+              </div>
+            </dd>
+            {/* 여기까지 */}
           </dl>
           <dl>
             <dt>

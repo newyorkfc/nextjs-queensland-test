@@ -270,7 +270,60 @@ input[id="check1"]:checked + label::after {
   flex-grow: 1;
   min-width: 33.6rem;
 }
-
+.personal dl dd + dd {
+  margin-left: 1.6rem;
+}
+dd.flex {
+  display: flex;
+  position: relative;
+}
+dd.flex label {
+  white-space: nowrap;
+  margin-right: 2.2rem;
+}
+.search-list {
+  position: relative;
+}
+.search-list ul {
+  position: absolute;
+  top: 30px;
+  left: 6px;
+  right: 0;
+  background: #fff;
+  box-shadow: 5px 6px 20px 0px rgba(0, 0, 0, 0.09);
+  -webkit-box-shadow: 5px 6px 20px 0px rgba(0, 0, 0, 0.09);
+  -moz-box-shadow: 5px 6px 20px 0px rgba(0, 0, 0, 0.09);
+  padding: 1.2rem 2.4rem;
+  max-height: 30rem;
+  overflow-y: auto;
+  border-radius: 8px;
+}
+.search-list ul li {
+  position: relative;
+  color: #717171;
+  padding-left: 1.9rem;
+  font-size: 1.3rem;
+  letter-spacing: 0;
+  font-weight: 300;
+}
+.search-list ul li + li {
+  margin-top: 0.8rem;
+}
+.search-list ul li:before {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  display: inline-block;
+  content: "";
+  background: url(../image/ico-location.svg) no-repeat;
+  width: 12px;
+  height: 16px;
+  background-size: 100% auto;
+}
+.search-list ul li strong {
+  font-weight: 400;
+  color: #ff0000;
+}
 .personal .h3 {
   margin-top: 3.2rem;
 }
