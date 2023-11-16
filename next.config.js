@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 
-function getConfig(config) {
-  return config;
-}
-
-module.exports = getConfig({
+const config = {
   images: {
-    domains: ['s3.amazonaws.com', 'scontent.cdninstagram.com'],
+    domains: ["s3.amazonaws.com", "scontent.cdninstagram.com"],
   },
-});
+  output: "export",
+  trailingSlash: true,
+};
+
+module.exports = config;
