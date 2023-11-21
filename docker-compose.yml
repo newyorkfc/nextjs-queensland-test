@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  nextjs:
+    container_name: front-dev
+    build: .
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "3001:3001"
