@@ -8,6 +8,7 @@ const UserProvider = ({ children }) => {
   const [userData, setUserData] = useState<UserVO>({
     name: { firstName: null, lastName: null },
     contact: { phone: null, email: null },
+    memo: null,
   });
 
   return (
