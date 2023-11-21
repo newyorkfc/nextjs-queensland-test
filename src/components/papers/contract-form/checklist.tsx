@@ -1,14 +1,13 @@
-import { FormChecklistVO } from "app/papers/contract-form/model";
-import axios from "axios";
-import NavigationButton from "components/papers/contract-form/navigation-button";
-import { NewContractContext } from "contexts/papers/contract/new-contract";
-import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { NewContractEnum } from "app/papers/new-contract/model";
+import { updateNewContract } from "helpers/papers/new-contract/updateNewContract";
+import { useState } from "react";
 
 export default function Checklist({
   newContract,
   setNewContract,
   contractForm,
+  isRead,
+  setIsRead,
 }) {
   const [answers, setAnswers] = useState({
     preExistingMedicalCondition: "",
@@ -31,8 +30,190 @@ export default function Checklist({
     extraDisclosure: "",
   });
 
-  const handleAnswerChange = (key) => (e) => {
-    setAnswers((prev) => ({ ...prev, [key]: e.target.value }));
+  const handleAnswerChange = (shortName) => (e) => {
+    setAnswers((prev) => ({ ...prev, [shortName]: e.target.value }));
+    switch (shortName) {
+      case "preExistingMedicalCondition":
+        updateNewContract(
+          newContract,
+          setNewContract,
+          NewContractEnum.generalHealth,
+          {
+            [shortName]: e.target.value,
+          }
+        );
+        break;
+      case "takingMedication":
+        updateNewContract(
+          newContract,
+          setNewContract,
+          NewContractEnum.generalHealth,
+          {
+            [shortName]: e.target.value,
+          }
+        );
+        break;
+      case "recentSurgery":
+        updateNewContract(
+          newContract,
+          setNewContract,
+          NewContractEnum.generalHealth,
+          {
+            [shortName]: e.target.value,
+          }
+        );
+        break;
+      case "recentInjury":
+        updateNewContract(
+          newContract,
+          setNewContract,
+          NewContractEnum.generalHealth,
+          {
+            [shortName]: e.target.value,
+          }
+        );
+        break;
+      case "jobRelatedLimitation":
+        updateNewContract(
+          newContract,
+          setNewContract,
+          NewContractEnum.generalHealth,
+          {
+            [shortName]: e.target.value,
+          }
+        );
+        break;
+      case "jobStress":
+        updateNewContract(
+          newContract,
+          setNewContract,
+          NewContractEnum.mentalHealth,
+          {
+            [shortName]: e.target.value,
+          }
+        );
+        break;
+      case "mentalCounseling":
+        updateNewContract(
+          newContract,
+          setNewContract,
+          NewContractEnum.mentalHealth,
+          {
+            [shortName]: e.target.value,
+          }
+        );
+        break;
+      case "awareOfEap":
+        updateNewContract(
+          newContract,
+          setNewContract,
+          NewContractEnum.mentalHealth,
+          {
+            [shortName]: e.target.value,
+          }
+        );
+        break;
+      case "awareOfSafetyPolicy":
+        updateNewContract(
+          newContract,
+          setNewContract,
+          NewContractEnum.safetyAware,
+          {
+            [shortName]: e.target.value,
+          }
+        );
+        break;
+      case "firstAidTraining":
+        updateNewContract(
+          newContract,
+          setNewContract,
+          NewContractEnum.safetyAware,
+          {
+            [shortName]: e.target.value,
+          }
+        );
+        break;
+      case "safetyReportingComfort":
+        updateNewContract(
+          newContract,
+          setNewContract,
+          NewContractEnum.safetyAware,
+          {
+            [shortName]: e.target.value,
+          }
+        );
+        break;
+      case "beeSting":
+        updateNewContract(
+          newContract,
+          setNewContract,
+          NewContractEnum.medicalCondition,
+          {
+            [shortName]: e.target.value,
+          }
+        );
+        break;
+      case "epilepsy":
+        updateNewContract(
+          newContract,
+          setNewContract,
+          NewContractEnum.medicalCondition,
+          {
+            [shortName]: e.target.value,
+          }
+        );
+        break;
+      case "diabetes":
+        updateNewContract(
+          newContract,
+          setNewContract,
+          NewContractEnum.medicalCondition,
+          {
+            [shortName]: e.target.value,
+          }
+        );
+        break;
+      case "pregnant":
+        updateNewContract(
+          newContract,
+          setNewContract,
+          NewContractEnum.medicalCondition,
+          {
+            [shortName]: e.target.value,
+          }
+        );
+        break;
+      case "highBloodPressure":
+        updateNewContract(
+          newContract,
+          setNewContract,
+          NewContractEnum.medicalCondition,
+          {
+            [shortName]: e.target.value,
+          }
+        );
+        break;
+      case "other":
+        updateNewContract(
+          newContract,
+          setNewContract,
+          NewContractEnum.medicalCondition,
+          {
+            [shortName]: e.target.value,
+          }
+        );
+        break;
+      case "extraDisclosure":
+        updateNewContract(
+          newContract,
+          setNewContract,
+          NewContractEnum.healthChecklist,
+          {
+            [shortName]: e.target.value,
+          }
+        );
+        break;
+    }
   };
 
   const getAnswerValue = (answer) => {
@@ -97,7 +278,12 @@ export default function Checklist({
 
           <div className="form-wrap">
             <label htmlFor="ohter">Other</label>
-            <input type="text" id="ohter" className="input-box" />
+            <input
+              type="text"
+              id="ohter"
+              className="input-box"
+              onChange={handleAnswerChange("other")}
+            />
           </div>
           <div className="comment">
             <span>
@@ -111,7 +297,12 @@ export default function Checklist({
               perform your job. It is vital that if you have had hepatitis or
               any other infectious disease that we have not been told.
             </span>
-            <input type="text" className="input-box" id="extraDisclosure" />
+            <input
+              type="text"
+              className="input-box"
+              id="extraDisclosure"
+              onChange={handleAnswerChange("extraDisclosure")}
+            />
             <span>
               These rules are to protect the health and safety of all our
               employees and our customers.
@@ -120,8 +311,15 @@ export default function Checklist({
           </div>
 
           <div className="agree-wrap">
-            <input type="checkbox" id="check1" />
-            <label htmlFor="check1">
+            <input
+              type="checkbox"
+              id="checklistIsRead"
+              value={isRead.checklist}
+              onChange={() => {
+                setIsRead({ ...isRead, checklist: !isRead.checklist });
+              }}
+            />
+            <label htmlFor="checklistIsRead">
               I have read, understand, and agree to abide by the “Employee
               Health & Hygiene Rules” above
             </label>

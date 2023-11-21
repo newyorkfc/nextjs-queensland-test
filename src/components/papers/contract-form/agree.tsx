@@ -1,5 +1,9 @@
-export default function Agree({ newContract, contractForm }) {
-  const name = newContract.worker.name;
+export default function Agree({
+  newContract,
+  contractForm,
+  isRead,
+  setIsRead,
+}) {
   const today = new Date();
   const formattedDate = `${String(today.getDate()).padStart(2, "0")}/${String(
     today.getMonth() + 1
@@ -23,7 +27,8 @@ export default function Agree({ newContract, contractForm }) {
             <dd className="Employee">
               <span>and</span>
               <span className="input-wrap">
-                <em className="input-line">{name}</em> (Employee)
+                <em className="input-line">{`${newContract.worker.firstName} ${newContract.worker.lastName}`}</em>{" "}
+                (Employee)
               </span>
             </dd>
             <dd>
@@ -42,8 +47,15 @@ export default function Agree({ newContract, contractForm }) {
             ))}
           </ol>
           <div className="agree-wrap">
-            <input type="checkbox" id="check1" />
-            <label htmlFor="check1">
+            <input
+              type="checkbox"
+              id="agreeIsRead"
+              value={isRead.agree}
+              onChange={() => {
+                setIsRead({ ...isRead, agree: !isRead.agree });
+              }}
+            />
+            <label htmlFor="agreeIsRead">
               I have read and understood the above agreement.
             </label>
           </div>

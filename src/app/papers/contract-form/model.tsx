@@ -11,6 +11,26 @@ export interface ContractFormVO {
   company: CompanyVO | null;
 }
 
+export const defaultContractForm: ContractFormVO = {
+  locationArray: [],
+  policyArray: [],
+  agreeArray: [],
+  scheduleArray: [],
+  guidelineArray: [],
+  checklistArray: [],
+  company: {
+    id: null,
+    createdAt: null,
+    updatedAt: null,
+    name: null,
+    address: null,
+    staffId: null,
+    boardArray: null,
+    farmArray: null,
+    teamArray: null,
+  },
+};
+
 export interface FormAgreeVO {
   id: string | null;
   number: string | null;

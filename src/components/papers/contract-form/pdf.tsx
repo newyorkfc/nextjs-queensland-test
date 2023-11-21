@@ -1,13 +1,17 @@
 import { Document, Page } from "react-pdf";
 import { useState } from "react";
+import { ContractFormVO } from "app/papers/contract-form/model";
 
-export default function Pdf({ contractForm }) {
+export default function Pdf({
+  contractForm,
+}: {
+  contractForm: ContractFormVO;
+}) {
   const pdfUrl = process.env.NEXT_PUBLIC_PDF_URL;
   const [numPages, setNumPages] = useState(null);
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
   }
-
 
   return (
     <section className="paper">

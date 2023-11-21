@@ -1,6 +1,4 @@
-import NavigationButton from "components/papers/contract-form/navigation-button";
-
-export default function Policy({ contractForm }) {
+export default function Policy({ contractForm, isRead, setIsRead }) {
   const midIndex = Math.ceil(contractForm.policyArray.length / 2);
   const firstHalfPolicies = contractForm.policyArray.slice(0, midIndex);
   const secondHalfPolicies = contractForm.policyArray.slice(midIndex);
@@ -55,8 +53,15 @@ export default function Policy({ contractForm }) {
             </div>
           </div>
           <div className="agree-wrap">
-            <input type="checkbox" id="check1" />
-            <label htmlFor="check1">
+            <input
+              type="checkbox"
+              id="policyIsRead"
+              value={isRead.policy}
+              onChange={() => {
+                setIsRead({ ...isRead, policy: !isRead.policy });                
+              }}
+            />
+            <label htmlFor="policyIsRead">
               By checking here, I declare that I will abide by company policies.
             </label>
           </div>

@@ -1,17 +1,23 @@
+import { ContractFormVO } from "app/papers/contract-form/model";
 import { SuburbVO } from "app/papers/contract/model";
-import { NewContractEnum } from "app/papers/new-contract/model";
+import { NewContractEnum, NewContractVO } from "app/papers/new-contract/model";
 import axios from "axios";
 import { updateNewContract } from "helpers/papers/new-contract/updateNewContract";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 export default function Personal({
   newContract,
   setNewContract,
   contractForm,
+} : {
+  newContract: NewContractVO;
+  setNewContract: Dispatch<SetStateAction<NewContractVO>>;
+  contractForm: ContractFormVO;
 }) {
   const [selectedLocationId, setSelectedLocationId] = useState(null);
   const [selectedGender, setSelectedGender] = useState("");
 
+  const [address, setAddress] = useState(newContract.contract.personalDetail?.address || '');
   const [suburbQuery, setSuburbQuery] = useState("");
   const [suburbs, setSuburbs] = useState<Array<SuburbVO | null>>([]);
   const [selectedSuburb, setSelectedSuburb] = useState<SuburbVO | null>(null);
@@ -105,7 +111,6 @@ export default function Personal({
   };
 
   const handleAddressChange = (field, value) => {
-    const address = newContract.contract.personalDetail.address || "";
     const [street, suburb] = address.split(", ");
     switch (field) {
       case "street":
@@ -117,6 +122,7 @@ export default function Personal({
             address: `${value}, ${suburb || ""}`,
           }
         );
+        setAddress(`${value}, ${suburb || ""}`);
         break;
       case "suburb":
         updateNewContract(
@@ -127,6 +133,7 @@ export default function Personal({
             address: `${street || ""}, ${value}`,
           }
         );
+        setAddress(`${street || ""}, ${value}`);
         break;
       default:
         break;
@@ -156,7 +163,7 @@ export default function Personal({
     setSuburbs([]);
     handleAddressChange(
       "suburb",
-      `${suburb.name}, ${suburb.state.abbreviation} ${suburb.postcode}`
+      `${suburb.name} ${suburb.state.abbreviation} ${suburb.postcode}`
     );
   };
 
@@ -334,7 +341,6 @@ export default function Personal({
                 className="input-box md"
                 id="firstName"
                 onChange={handleFirstNameChange}
-                value={newContract.worker.firstName}
               />
             </dd>
             <dt>
@@ -346,7 +352,6 @@ export default function Personal({
                 className="input-box md"
                 id="lastName"
                 onChange={handleLastNameChange}
-                value={newContract.worker.lastName}
               />
             </dd>
           </dl>
@@ -360,7 +365,6 @@ export default function Personal({
                 className="input-box md"
                 id="englishName"
                 onChange={handleEnglishNameChange}
-                value={newContract.worker.englishName}
               />
             </dd>
             <dt>Gender</dt>
@@ -388,7 +392,6 @@ export default function Personal({
             <dd>
               <input
                 type="number"
-                value={(newContract.worker.birthDate || "").split("/")[0] || ""}
                 placeholder="day"
                 maxLength={2}
                 onChange={(e) => handleBirthDateChange("day", e.target.value)}
@@ -396,7 +399,6 @@ export default function Personal({
               <span>/</span>
               <input
                 type="number"
-                value={(newContract.worker.birthDate || "").split("/")[1] || ""}
                 placeholder="month"
                 maxLength={2}
                 onChange={(e) => handleBirthDateChange("month", e.target.value)}
@@ -405,7 +407,6 @@ export default function Personal({
               <input
                 type="number"
                 id="birthDate"
-                value={(newContract.worker.birthDate || "").split("/")[2] || ""}
                 placeholder="year"
                 maxLength={4}
                 onChange={(e) => handleBirthDateChange("year", e.target.value)}
@@ -422,7 +423,6 @@ export default function Personal({
                 className="input-box"
                 id="cellPhone"
                 onChange={handleCellPhoneChange}
-                value={newContract.personalDetail.cellPhone}
               />
             </dd>
           </dl>
@@ -436,7 +436,6 @@ export default function Personal({
                 className="input-box"
                 id="email"
                 onChange={handleEmailCahange}
-                value={newContract.personalDetail.email}
               />
             </dd>
           </dl>
@@ -464,7 +463,7 @@ export default function Personal({
                   className="input-box md"
                   value={
                     selectedSuburb
-                      ? `${selectedSuburb.name}, ${selectedSuburb.state.abbreviation} ${selectedSuburb.postcode}`
+                      ? `${selectedSuburb.name} ${selectedSuburb.state.abbreviation} ${selectedSuburb.postcode}`
                       : suburbQuery
                   }
                   onChange={handleSubrubInputChange}
@@ -523,7 +522,7 @@ export default function Personal({
                           key={index}
                           onClick={() => handleSuburbClick(suburb)}
                         >
-                          {nameMatchText}, {suburb.state?.abbreviation}{" "}
+                          {nameMatchText}{" "}{suburb.state?.abbreviation}{" "}
                           {postcodeMatchText}
                         </li>
                       );
@@ -612,15 +611,19 @@ export default function Personal({
               />
             </dd>
           </dl>
-          <datalist>
-            <label htmlFor="emergencyContactCellPhone">Mobile Number</label>
-            <input
-              type="text"
-              className="input-box"
-              id="emergencyContactCellPhone"
-              onChange={handleEmergencyContactCellPhoneChange}
-            />
-          </datalist>
+          <dl>
+            <dt>
+              <label htmlFor="emergencyContactCellPhone">Mobile Number</label>
+            </dt>
+            <dd>
+              <input
+                type="text"
+                className="input-box"
+                id="emergencyContactCellPhone"
+                onChange={handleEmergencyContactCellPhoneChange}
+              />
+            </dd>
+          </dl>
           <h3 className="h3">Superannuation</h3>
           <dl>
             <dt>

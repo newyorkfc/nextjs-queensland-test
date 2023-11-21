@@ -1,16 +1,40 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { NewContractVO } from "app/papers/new-contract/model";
-import { defaultNewContract } from "hooks/papers/new-contract/useNewContract";
+import {
+  NewContractEnum,
+  NewContractVO,
+  defaultNewContract,
+} from "app/papers/new-contract/model";
 import Pdf from "components/papers/contract-form/pdf";
 import axios from "axios";
-import { ContractFormVO } from "app/papers/contract-form/model";
+import {
+  ContractFormVO,
+  defaultContractForm,
+} from "app/papers/contract-form/model";
 import Personal from "components/papers/contract-form/personal";
 import Policy from "components/papers/contract-form/policy";
 import Agree from "components/papers/contract-form/agree";
 import Schedule from "components/papers/contract-form/schedule";
 import Guideline from "components/papers/contract-form/guideline";
 import Checklist from "components/papers/contract-form/checklist";
+import { updateNewContract } from "helpers/papers/new-contract/updateNewContract";
+
+export interface IsReadVO {
+  policy: boolean;
+  agree: boolean;
+  schedule: boolean;
+  guideline: boolean;
+  checklist: boolean;
+  validationError: string;
+}
+export const defaultIsRead: IsReadVO = {
+  policy: false,
+  agree: false,
+  schedule: false,
+  guideline: false,
+  checklist: false,
+  validationError: "",
+};
 
 export default function ContractForm() {
   const router = useRouter();
@@ -18,26 +42,11 @@ export default function ContractForm() {
 
   const [newContract, setNewContract] =
     useState<NewContractVO>(defaultNewContract);
-  const [contractForm, setContractForm] = useState<ContractFormVO>({
-    locationArray: [],
-    policyArray: [],
-    agreeArray: [],
-    scheduleArray: [],
-    guidelineArray: [],
-    checklistArray: [],
-    company: {
-      id: null,
-      createdAt: null,
-      updatedAt: null,
-      name: null,
-      address: null,
-      staffId: null,
-      boardArray: null,
-      farmArray: null,
-      teamArray: null,
-    },
-  });
+  const [contractForm, setContractForm] =
+    useState<ContractFormVO>(defaultContractForm);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isRead, setIsRead] = useState<IsReadVO>(defaultIsRead);
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(false);
 
   const scrollToComponent = (id: string) => {
     const element = document.getElementById(id);
@@ -45,12 +54,30 @@ export default function ContractForm() {
   };
 
   const handleSubmit = async () => {
+    if (
+      !isRead.policy ||
+      !isRead.agree ||
+      !isRead.schedule ||
+      !isRead.guideline ||
+      !isRead.checklist
+    ) {
+      setIsSubmitDisabled(true);
+      setIsRead({
+        ...isRead,
+        validationError: "Please read all the documents.",
+      });
+      return;
+    }
+    setIsSubmitDisabled(false);
+    setIsRead({
+      ...isRead,
+      validationError: "",
+    });
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/papers/contract?do=add`,
         newContract
       );
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -63,6 +90,14 @@ export default function ContractForm() {
           `${process.env.NEXT_PUBLIC_SERVER_URL}/papers/contract-form?by=all&company=${companyName}`
         );
         setContractForm(response.data.json);
+        updateNewContract(
+          newContract,
+          setNewContract,
+          NewContractEnum.company,
+          {
+            name: companyName,
+          }
+        );
       } catch (error) {
         console.log(error);
       } finally {
@@ -108,27 +143,53 @@ export default function ContractForm() {
           />
         </div>
         <div id="policy">
-          <Policy contractForm={contractForm} />
+          <Policy
+            contractForm={contractForm}
+            isRead={isRead}
+            setIsRead={setIsRead}
+          />
         </div>
         <div id="agree">
-          <Agree newContract={newContract} contractForm={contractForm} />
+          <Agree
+            newContract={newContract}
+            contractForm={contractForm}
+            isRead={isRead}
+            setIsRead={setIsRead}
+          />
         </div>
         <div id="schedule">
-          <Schedule contractForm={contractForm} />
+          <Schedule
+            contractForm={contractForm}
+            isRead={isRead}
+            setIsRead={setIsRead}
+          />
         </div>
         <div id="guideline">
-          <Guideline contractForm={contractForm} />
+          <Guideline
+            contractForm={contractForm}
+            isRead={isRead}
+            setIsRead={setIsRead}
+          />
         </div>
         <div id="checklist">
           <Checklist
             newContract={newContract}
             setNewContract={setNewContract}
             contractForm={contractForm}
+            isRead={isRead}
+            setIsRead={setIsRead}
           />
         </div>
+
         <div className="btn-wrap">
+          {isRead.validationError && <div>{isRead.validationError}</div>}
           <button type="button">cancel</button>
-          <button type="button" className="primary" onClick={handleSubmit}>
+          <button
+            type="submit"
+            className="primary"
+            onClick={handleSubmit}
+            disabled={isSubmitDisabled}
+          >
             submit
           </button>
         </div>

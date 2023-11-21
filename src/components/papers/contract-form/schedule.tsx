@@ -1,4 +1,4 @@
-export default function Schedule({ contractForm }) {
+export default function Schedule({ contractForm, isRead, setIsRead }) {
   const today = new Date();
   const formattedDate = `${String(today.getDate()).padStart(2, "0")}/${String(
     today.getMonth() + 1
@@ -63,8 +63,15 @@ export default function Schedule({ contractForm }) {
             </dl>
           ))}
           <div className="agree-wrap">
-            <input type="checkbox" id="check1" />
-            <label htmlFor="check1">I have read and understood.</label>
+            <input
+              type="checkbox"
+              id="scheduleIsRead"
+              value={isRead.schedule}
+              onChange={() => {
+                setIsRead({ ...isRead, schedule: !isRead.schedule });
+              }}
+            />
+            <label htmlFor="scheduleIsRead">I have read and understood.</label>
           </div>
         </div>
       </div>

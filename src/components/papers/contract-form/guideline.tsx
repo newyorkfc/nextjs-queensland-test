@@ -1,5 +1,4 @@
-export default function Guideline({contractForm}) {
-
+export default function Guideline({ contractForm, isRead, setIsRead }) {
   const midIndex = Math.ceil(contractForm.guidelineArray.length / 2);
   const firstHalfGuidelines = contractForm.guidelineArray.slice(0, midIndex);
   const secondHalfGuidelines = contractForm.guidelineArray.slice(midIndex);
@@ -47,8 +46,15 @@ export default function Guideline({contractForm}) {
           </div>
 
           <div className="agree-wrap">
-            <input type="checkbox" id="check1" />
-            <label htmlFor="check1">I have read and understood.</label>
+            <input
+              type="checkbox"
+              id="guidelineIsRead"
+              value={isRead.guideline}
+              onChange={() => {
+                setIsRead({ ...isRead, guideline: !isRead.guideline });
+              }}
+            />
+            <label htmlFor="guidelineIsRead">I have read and understood.</label>
           </div>
         </div>
       </div>
