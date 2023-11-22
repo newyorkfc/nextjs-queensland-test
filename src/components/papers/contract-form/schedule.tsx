@@ -74,7 +74,6 @@ export default function Schedule({
               id="scheduleIsRead"
               value={isRead.schedule}
               onChange={() => {
-                setIsRead({ ...isRead, schedule: !isRead.schedule });
                 if (
                   isRead.policy &&
                   isRead.agree &&
@@ -83,7 +82,13 @@ export default function Schedule({
                   isRead.checklist
                 ) {
                   setIsSubmitDisabled(false);
-                  setIsRead({ ...isRead, validationError: "" });
+                  setIsRead({
+                    ...isRead,
+                    schedule: !isRead.schedule,
+                    validationError: "",
+                  });
+                } else {
+                  setIsRead({ ...isRead, schedule: !isRead.schedule });
                 }
               }}
             />

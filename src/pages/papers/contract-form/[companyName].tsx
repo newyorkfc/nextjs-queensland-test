@@ -54,11 +54,6 @@ export default function ContractForm() {
   };
 
   const handleSubmit = async () => {
-    console.log("isRead");
-    console.log(isRead);
-    console.log("isSubmitDisabled");
-    console.log(isSubmitDisabled);
-
     if (
       !isRead.policy ||
       !isRead.agree ||

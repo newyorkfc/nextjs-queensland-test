@@ -9,7 +9,7 @@ export default function Personal({
   newContract,
   setNewContract,
   contractForm,
-} : {
+}: {
   newContract: NewContractVO;
   setNewContract: Dispatch<SetStateAction<NewContractVO>>;
   contractForm: ContractFormVO;
@@ -17,7 +17,9 @@ export default function Personal({
   const [selectedLocationId, setSelectedLocationId] = useState(null);
   const [selectedGender, setSelectedGender] = useState("");
 
-  const [address, setAddress] = useState(newContract.contract.personalDetail?.address || '');
+  const [address, setAddress] = useState(
+    newContract.contract.personalDetail?.address || ""
+  );
   const [suburbQuery, setSuburbQuery] = useState("");
   const [suburbs, setSuburbs] = useState<Array<SuburbVO | null>>([]);
   const [selectedSuburb, setSelectedSuburb] = useState<SuburbVO | null>(null);
@@ -525,7 +527,7 @@ export default function Personal({
                           key={index}
                           onClick={() => handleSuburbClick(suburb)}
                         >
-                          {nameMatchText}{" "}{suburb.state?.abbreviation}{" "}
+                          {nameMatchText} {suburb.state?.abbreviation}{" "}
                           {postcodeMatchText}
                         </li>
                       );

@@ -58,16 +58,17 @@ export default function Agree({
               id="agreeIsRead"
               value={isRead.agree}
               onChange={() => {
-                setIsRead({ ...isRead, agree: !isRead.agree });
                 if (
-                  isRead.policy  &&
+                  isRead.policy &&
                   isRead.agree === false &&
                   isRead.schedule &&
                   isRead.guideline &&
                   isRead.checklist
                 ) {
                   setIsSubmitDisabled(false);
-                  setIsRead({ ...isRead, validationError: "" });
+                  setIsRead({ ...isRead, agree: !isRead.agree, validationError: "" });
+                } else {
+                  setIsRead({ ...isRead, agree: !isRead.agree });
                 }
               }}
             />

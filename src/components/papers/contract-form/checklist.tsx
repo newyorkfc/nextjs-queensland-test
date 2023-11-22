@@ -318,7 +318,6 @@ export default function Checklist({
               id="checklistIsRead"
               value={isRead.checklist}
               onChange={() => {
-                setIsRead({ ...isRead, checklist: !isRead.checklist });
                 if (
                   isRead.policy &&
                   isRead.agree &&
@@ -327,7 +326,13 @@ export default function Checklist({
                   isRead.checklist === false
                 ) {
                   setIsSubmitDisabled(false);
-                  setIsRead({ ...isRead, validationError: "" });
+                  setIsRead({
+                    ...isRead,
+                    checklist: !isRead.checklist,
+                    validationError: "",
+                  });
+                } else {
+                  setIsRead({ ...isRead, checklist: !isRead.checklist });
                 }
               }}
             />

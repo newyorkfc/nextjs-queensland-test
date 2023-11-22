@@ -51,7 +51,6 @@ export default function Guideline({ contractForm, isRead, setIsRead, isSubmitDis
               id="guidelineIsRead"
               value={isRead.guideline}
               onChange={() => {
-                setIsRead({ ...isRead, guideline: !isRead.guideline });
                 if (
                   isRead.policy &&
                   isRead.agree &&
@@ -60,7 +59,13 @@ export default function Guideline({ contractForm, isRead, setIsRead, isSubmitDis
                   isRead.checklist
                 ) {
                   setIsSubmitDisabled(false);
-                  setIsRead({ ...isRead, validationError: "" });
+                  setIsRead({
+                    ...isRead,
+                    guideline: !isRead.guideline,
+                    validationError: "",
+                  });
+                } else {
+                  setIsRead({ ...isRead, guideline: !isRead.guideline });
                 }
               }}
             />

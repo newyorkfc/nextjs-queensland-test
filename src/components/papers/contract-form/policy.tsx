@@ -64,7 +64,6 @@ export default function Policy({
               id="policyIsRead"
               value={isRead.policy}
               onChange={() => {
-                setIsRead({ ...isRead, policy: !isRead.policy });
                 if (
                   isRead.policy === false &&
                   isRead.agree &&
@@ -73,7 +72,13 @@ export default function Policy({
                   isRead.checklist
                 ) {
                   setIsSubmitDisabled(false);
-                  setIsRead({ ...isRead, validationError: "" });
+                  setIsRead({
+                    ...isRead,
+                    policy: !isRead.policy,
+                    validationError: "",
+                  });
+                } else {
+                  setIsRead({ ...isRead, policy: !isRead.policy });
                 }
               }}
             />
