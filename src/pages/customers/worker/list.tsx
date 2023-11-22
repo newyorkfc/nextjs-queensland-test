@@ -1,5 +1,6 @@
 import { WorkerViewVO } from "app/customers/worker/model";
 import axios from "axios";
+import ExcelUpload from "components/customers/worker/excel-upload";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -131,6 +132,7 @@ export default function WorkerList() {
           </tfoot>
         </table>
       </div>
+      <ExcelUpload />
     </section>
   );
 }

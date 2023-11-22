@@ -54,6 +54,11 @@ export default function ContractForm() {
   };
 
   const handleSubmit = async () => {
+    console.log("isRead");
+    console.log(isRead);
+    console.log("isSubmitDisabled");
+    console.log(isSubmitDisabled);
+
     if (
       !isRead.policy ||
       !isRead.agree ||
@@ -68,16 +73,21 @@ export default function ContractForm() {
       });
       return;
     }
-    setIsSubmitDisabled(false);
-    setIsRead({
-      ...isRead,
-      validationError: "",
-    });
+
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/papers/contract?do=add`,
         newContract
       );
+      if (response && response.data) {
+        if (response.data.message === "OK") {
+          alert(
+            "Contract has been submitted successfully.\nWhen the contract is approved, you will receive an email."
+          );
+        } else {
+          alert(response.data);
+        }
+      }
     } catch (error) {
       console.error(error);
     }
@@ -113,22 +123,28 @@ export default function ContractForm() {
   return (
     <div style={{ display: "flex" }}>
       <div id="scroll-button" style={{ position: "fixed" }}>
-        <button onClick={() => scrollToComponent("pdf")}>pdf</button>
+        <button onClick={() => scrollToComponent("pdf")}>
+          Fair Work Infomation
+        </button>
         <br />
-        <button onClick={() => scrollToComponent("personal")}>personal</button>
+        <button onClick={() => scrollToComponent("personal")}>
+          Personal Details
+        </button>
         <br />
-        <button onClick={() => scrollToComponent("policy")}>policy</button>
+        <button onClick={() => scrollToComponent("policy")}>Policies</button>
         <br />
-        <button onClick={() => scrollToComponent("agree")}>agree</button>
+        <button onClick={() => scrollToComponent("agree")}>
+          Piecework Agreement
+        </button>
         <br />
-        <button onClick={() => scrollToComponent("schedule")}>schedule</button>
+        <button onClick={() => scrollToComponent("schedule")}>Schedule</button>
         <br />
         <button onClick={() => scrollToComponent("guideline")}>
-          guideline
+          Work Health & Safety Guidelines
         </button>
         <br />
         <button onClick={() => scrollToComponent("checklist")}>
-          checklist
+          Health Survey Checklist
         </button>
       </div>
       <div id="contract-form" style={{ width: "100%" }}>
@@ -147,6 +163,8 @@ export default function ContractForm() {
             contractForm={contractForm}
             isRead={isRead}
             setIsRead={setIsRead}
+            isSubmitDisabled={isSubmitDisabled}
+            setIsSubmitDisabled={setIsSubmitDisabled}
           />
         </div>
         <div id="agree">
@@ -155,6 +173,8 @@ export default function ContractForm() {
             contractForm={contractForm}
             isRead={isRead}
             setIsRead={setIsRead}
+            isSubmitDisabled={isSubmitDisabled}
+            setIsSubmitDisabled={setIsSubmitDisabled}
           />
         </div>
         <div id="schedule">
@@ -162,6 +182,8 @@ export default function ContractForm() {
             contractForm={contractForm}
             isRead={isRead}
             setIsRead={setIsRead}
+            isSubmitDisabled={isSubmitDisabled}
+            setIsSubmitDisabled={setIsSubmitDisabled}
           />
         </div>
         <div id="guideline">
@@ -169,6 +191,8 @@ export default function ContractForm() {
             contractForm={contractForm}
             isRead={isRead}
             setIsRead={setIsRead}
+            isSubmitDisabled={isSubmitDisabled}
+            setIsSubmitDisabled={setIsSubmitDisabled}
           />
         </div>
         <div id="checklist">
@@ -178,6 +202,8 @@ export default function ContractForm() {
             contractForm={contractForm}
             isRead={isRead}
             setIsRead={setIsRead}
+            isSubmitDisabled={isSubmitDisabled}
+            setIsSubmitDisabled={setIsSubmitDisabled}
           />
         </div>
 

@@ -1,4 +1,10 @@
-export default function Schedule({ contractForm, isRead, setIsRead }) {
+export default function Schedule({
+  contractForm,
+  isRead,
+  setIsRead,
+  isSubmitDisabled,
+  setIsSubmitDisabled,
+}) {
   const today = new Date();
   const formattedDate = `${String(today.getDate()).padStart(2, "0")}/${String(
     today.getMonth() + 1
@@ -69,6 +75,16 @@ export default function Schedule({ contractForm, isRead, setIsRead }) {
               value={isRead.schedule}
               onChange={() => {
                 setIsRead({ ...isRead, schedule: !isRead.schedule });
+                if (
+                  isRead.policy &&
+                  isRead.agree &&
+                  isRead.schedule === false &&
+                  isRead.guideline &&
+                  isRead.checklist
+                ) {
+                  setIsSubmitDisabled(false);
+                  setIsRead({ ...isRead, validationError: "" });
+                }
               }}
             />
             <label htmlFor="scheduleIsRead">I have read and understood.</label>

@@ -10,27 +10,31 @@ export default function ExcelUpload() {
 
   const uploadFile = async () => {
     if (!selectedFile) {
-      alert('파일을 선택해주세요.');
+      alert("Select a file first.");
       return;
     }
     const formData = new FormData();
-    formData.append('file', selectedFile);
+    formData.append("file", selectedFile);
     try {
-      const response = await axios.post('http://localhost:8000/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log('서버 응답:', response.data);
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/customers/worker-excel?do=add`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(response.data);
     } catch (error) {
-      console.error('업로드 오류:', error);
+      console.log(error);
     }
   };
 
   return (
     <div>
       <input type="file" onChange={handleFileChange} accept=".xlsx, .xls" />
-      <button onClick={uploadFile}>파일 업로드</button>
+      <button onClick={uploadFile}>Upload</button>
     </div>
   );
 }

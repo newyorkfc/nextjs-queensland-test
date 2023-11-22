@@ -8,6 +8,8 @@ export default function Checklist({
   contractForm,
   isRead,
   setIsRead,
+  isSubmitDisabled,
+  setIsSubmitDisabled,
 }) {
   const [answers, setAnswers] = useState({
     preExistingMedicalCondition: "",
@@ -317,6 +319,16 @@ export default function Checklist({
               value={isRead.checklist}
               onChange={() => {
                 setIsRead({ ...isRead, checklist: !isRead.checklist });
+                if (
+                  isRead.policy &&
+                  isRead.agree &&
+                  isRead.schedule &&
+                  isRead.guideline &&
+                  isRead.checklist === false
+                ) {
+                  setIsSubmitDisabled(false);
+                  setIsRead({ ...isRead, validationError: "" });
+                }
               }}
             />
             <label htmlFor="checklistIsRead">

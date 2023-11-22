@@ -3,6 +3,8 @@ export default function Agree({
   contractForm,
   isRead,
   setIsRead,
+  isSubmitDisabled,
+  setIsSubmitDisabled,
 }) {
   const today = new Date();
   const formattedDate = `${String(today.getDate()).padStart(2, "0")}/${String(
@@ -27,7 +29,11 @@ export default function Agree({
             <dd className="Employee">
               <span>and</span>
               <span className="input-wrap">
-                <em className="input-line">{`${newContract.worker.firstName} ${newContract.worker.lastName}`}</em>{" "}
+                <em className="input-line">
+                  {newContract.worker.firstName && newContract.worker.lastName
+                    ? `${newContract.worker.firstName} ${newContract.worker.lastName}`
+                    : ""}
+                </em>
                 (Employee)
               </span>
             </dd>
@@ -53,6 +59,16 @@ export default function Agree({
               value={isRead.agree}
               onChange={() => {
                 setIsRead({ ...isRead, agree: !isRead.agree });
+                if (
+                  isRead.policy  &&
+                  isRead.agree === false &&
+                  isRead.schedule &&
+                  isRead.guideline &&
+                  isRead.checklist
+                ) {
+                  setIsSubmitDisabled(false);
+                  setIsRead({ ...isRead, validationError: "" });
+                }
               }}
             />
             <label htmlFor="agreeIsRead">

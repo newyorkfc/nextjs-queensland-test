@@ -12,9 +12,12 @@ import {
   SuperannuationVO,
 } from "../contract/model";
 import { BankDetailVO } from "app/taxes/bank-detail/model";
+import { FarmVO, LocationVO } from "app/customers/farm/model";
 
 export interface NewContractVO {
   company: CompanyVO | null;
+  location: LocationVO | null;
+  farm: FarmVO | null;
   worker: WorkerVO | null;
   passport: PassportVO | null;
   staffArea: StaffAreaVO | null;
@@ -33,6 +36,8 @@ export interface NewContractVO {
 export enum NewContractEnum {
   newContract = "newContract",
   company = "company",
+  location = "location",
+  farm = "farm",
   worker = "worker",
   passport = "passport",
   staffArea = "staffArea",
@@ -59,6 +64,22 @@ export const defaultNewContract: NewContractVO = {
     boardArray: null,
     farmArray: null,
     teamArray: null,
+  },
+  location: {
+    id: null,
+    createdAt: null,
+    updatedAt: null,
+    name: null,
+    farmArray: null,
+  },
+  farm: {
+    id: null,
+    createdAt: null,
+    updatedAt: null,
+    name: null,
+    locationId: null,
+    companyId: null,
+    orderArray: null,
   },
   worker: {
     id: null,

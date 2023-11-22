@@ -1,4 +1,4 @@
-export default function Guideline({ contractForm, isRead, setIsRead }) {
+export default function Guideline({ contractForm, isRead, setIsRead, isSubmitDisabled, setIsSubmitDisabled }) {
   const midIndex = Math.ceil(contractForm.guidelineArray.length / 2);
   const firstHalfGuidelines = contractForm.guidelineArray.slice(0, midIndex);
   const secondHalfGuidelines = contractForm.guidelineArray.slice(midIndex);
@@ -52,6 +52,16 @@ export default function Guideline({ contractForm, isRead, setIsRead }) {
               value={isRead.guideline}
               onChange={() => {
                 setIsRead({ ...isRead, guideline: !isRead.guideline });
+                if (
+                  isRead.policy &&
+                  isRead.agree &&
+                  isRead.schedule &&
+                  isRead.guideline === false &&
+                  isRead.checklist
+                ) {
+                  setIsSubmitDisabled(false);
+                  setIsRead({ ...isRead, validationError: "" });
+                }
               }}
             />
             <label htmlFor="guidelineIsRead">I have read and understood.</label>

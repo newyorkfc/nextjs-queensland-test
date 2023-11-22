@@ -30,11 +30,14 @@ export default function Personal({
 
   const handleLocationChange = (e) => {
     setSelectedLocationId(Number(e.target.value));
+    updateNewContract(newContract, setNewContract, NewContractEnum.location, {
+      id: e.target.value,
+    });
   };
 
   const handleFarmChange = (e) => {
-    updateNewContract(newContract, setNewContract, NewContractEnum.contract, {
-      farmId: e.target.value,
+    updateNewContract(newContract, setNewContract, NewContractEnum.farm, {
+      id: e.target.value,
     });
   };
 
@@ -292,8 +295,8 @@ export default function Personal({
                     <input
                       type="radio"
                       id="title"
-                      value={title.toLowerCase()}
-                      checked={newContract.worker.title === title.toLowerCase()}
+                      value={title}
+                      checked={newContract.worker.title === title}
                       onChange={handleTitleChange}
                     />
                     <span>{title}</span>
@@ -375,8 +378,8 @@ export default function Personal({
                     <input
                       type="radio"
                       id="gender"
-                      value={gender.toLowerCase()}
-                      checked={selectedGender === gender.toLowerCase()}
+                      value={gender}
+                      checked={selectedGender === gender}
                       onChange={handleGenderChange}
                     />
                     <span>{gender}</span>

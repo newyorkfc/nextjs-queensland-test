@@ -1,4 +1,10 @@
-export default function Policy({ contractForm, isRead, setIsRead }) {
+export default function Policy({
+  contractForm,
+  isRead,
+  setIsRead,
+  isSubmitDisabled,
+  setIsSubmitDisabled,
+}) {
   const midIndex = Math.ceil(contractForm.policyArray.length / 2);
   const firstHalfPolicies = contractForm.policyArray.slice(0, midIndex);
   const secondHalfPolicies = contractForm.policyArray.slice(midIndex);
@@ -58,7 +64,17 @@ export default function Policy({ contractForm, isRead, setIsRead }) {
               id="policyIsRead"
               value={isRead.policy}
               onChange={() => {
-                setIsRead({ ...isRead, policy: !isRead.policy });                
+                setIsRead({ ...isRead, policy: !isRead.policy });
+                if (
+                  isRead.policy === false &&
+                  isRead.agree &&
+                  isRead.schedule &&
+                  isRead.guideline &&
+                  isRead.checklist
+                ) {
+                  setIsSubmitDisabled(false);
+                  setIsRead({ ...isRead, validationError: "" });
+                }
               }}
             />
             <label htmlFor="policyIsRead">
