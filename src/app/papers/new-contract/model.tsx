@@ -196,3 +196,30 @@ export const defaultNewContract: NewContractVO = {
     healthChecklistId: null,
   },
 };
+
+export interface IsReadVO {
+  policy: boolean;
+  agree: boolean;
+  schedule: boolean;
+  guideline: boolean;
+  checklist: boolean;
+  validationError: string;
+}
+
+export enum IsReadEnum {
+  policy = "policy",
+  agree = "agree",
+  schedule = "schedule",
+  guideline = "guideline",
+  checklist = "checklist",
+  validationError = "validationError",
+}
+
+export const defaultIsRead: IsReadVO = {
+  policy: false,
+  agree: false,
+  schedule: false,
+  guideline: false,
+  checklist: false,
+  validationError: "",
+};

@@ -1,3 +1,6 @@
+import { IsReadEnum } from "app/papers/new-contract/model";
+import { updateIsRead } from "helpers/papers/new-contract/updateIsRead";
+
 export default function Policy({
   contractForm,
   isRead,
@@ -8,6 +11,10 @@ export default function Policy({
   const midIndex = Math.ceil(contractForm.policyArray.length / 2);
   const firstHalfPolicies = contractForm.policyArray.slice(0, midIndex);
   const secondHalfPolicies = contractForm.policyArray.slice(midIndex);
+
+  const handlePolicyIsRead = () => {
+    updateIsRead(isRead, setIsRead, setIsSubmitDisabled, IsReadEnum.policy);
+  };
 
   return (
     <section className="paper">
@@ -63,24 +70,7 @@ export default function Policy({
               type="checkbox"
               id="policyIsRead"
               value={isRead.policy}
-              onChange={() => {
-                if (
-                  isRead.policy === false &&
-                  isRead.agree &&
-                  isRead.schedule &&
-                  isRead.guideline &&
-                  isRead.checklist
-                ) {
-                  setIsSubmitDisabled(false);
-                  setIsRead({
-                    ...isRead,
-                    policy: !isRead.policy,
-                    validationError: "",
-                  });
-                } else {
-                  setIsRead({ ...isRead, policy: !isRead.policy });
-                }
-              }}
+              onChange={handlePolicyIsRead}
             />
             <label htmlFor="policyIsRead">
               By checking here, I declare that I will abide by company policies.

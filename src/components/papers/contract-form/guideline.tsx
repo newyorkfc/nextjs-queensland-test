@@ -1,7 +1,20 @@
-export default function Guideline({ contractForm, isRead, setIsRead, isSubmitDisabled, setIsSubmitDisabled }) {
+import { IsReadEnum } from "app/papers/new-contract/model";
+import { updateIsRead } from "helpers/papers/new-contract/updateIsRead";
+
+export default function Guideline({
+  contractForm,
+  isRead,
+  setIsRead,
+  isSubmitDisabled,
+  setIsSubmitDisabled,
+}) {
   const midIndex = Math.ceil(contractForm.guidelineArray.length / 2);
   const firstHalfGuidelines = contractForm.guidelineArray.slice(0, midIndex);
   const secondHalfGuidelines = contractForm.guidelineArray.slice(midIndex);
+
+  const handleGuidelineIsRead = () => {
+    updateIsRead(isRead, setIsRead, setIsSubmitDisabled, IsReadEnum.guideline);
+  };
 
   return (
     <section className="paper guideline">
@@ -50,24 +63,7 @@ export default function Guideline({ contractForm, isRead, setIsRead, isSubmitDis
               type="checkbox"
               id="guidelineIsRead"
               value={isRead.guideline}
-              onChange={() => {
-                if (
-                  isRead.policy &&
-                  isRead.agree &&
-                  isRead.schedule &&
-                  isRead.guideline === false &&
-                  isRead.checklist
-                ) {
-                  setIsSubmitDisabled(false);
-                  setIsRead({
-                    ...isRead,
-                    guideline: !isRead.guideline,
-                    validationError: "",
-                  });
-                } else {
-                  setIsRead({ ...isRead, guideline: !isRead.guideline });
-                }
-              }}
+              onChange={handleGuidelineIsRead}
             />
             <label htmlFor="guidelineIsRead">I have read and understood.</label>
           </div>

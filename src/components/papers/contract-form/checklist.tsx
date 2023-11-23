@@ -1,4 +1,5 @@
-import { NewContractEnum } from "app/papers/new-contract/model";
+import { IsReadEnum, NewContractEnum } from "app/papers/new-contract/model";
+import { updateIsRead } from "helpers/papers/new-contract/updateIsRead";
 import { updateNewContract } from "helpers/papers/new-contract/updateNewContract";
 import { useState } from "react";
 
@@ -229,6 +230,10 @@ export default function Checklist({
     }
   };
 
+  const handleChecklistIsRead = () => {
+    updateIsRead(isRead, setIsRead, setIsSubmitDisabled, IsReadEnum.checklist);
+  };
+
   return (
     <section className="paper checklist">
       <div className="container">
@@ -317,24 +322,7 @@ export default function Checklist({
               type="checkbox"
               id="checklistIsRead"
               value={isRead.checklist}
-              onChange={() => {
-                if (
-                  isRead.policy &&
-                  isRead.agree &&
-                  isRead.schedule &&
-                  isRead.guideline &&
-                  isRead.checklist === false
-                ) {
-                  setIsSubmitDisabled(false);
-                  setIsRead({
-                    ...isRead,
-                    checklist: !isRead.checklist,
-                    validationError: "",
-                  });
-                } else {
-                  setIsRead({ ...isRead, checklist: !isRead.checklist });
-                }
-              }}
+              onChange={handleChecklistIsRead}
             />
             <label htmlFor="checklistIsRead">
               I have read, understand, and agree to abide by the “Employee

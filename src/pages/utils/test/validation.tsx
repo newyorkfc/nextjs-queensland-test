@@ -50,7 +50,7 @@ export default function ContractForm() {
         }
       }
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   };
 

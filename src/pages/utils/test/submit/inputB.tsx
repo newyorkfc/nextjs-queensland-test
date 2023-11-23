@@ -28,7 +28,7 @@ export default function InputB() {
       );
       console.log(response.data);
     } catch (error) {
-      console.error(error);
+      alert(error);
     } finally {
       sessionStorage.removeItem("userData");
     }

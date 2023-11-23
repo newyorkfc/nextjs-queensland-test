@@ -1,8 +1,10 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import {
+  IsReadVO,
   NewContractEnum,
   NewContractVO,
+  defaultIsRead,
   defaultNewContract,
 } from "app/papers/new-contract/model";
 import Pdf from "components/papers/contract-form/pdf";
@@ -19,22 +21,7 @@ import Guideline from "components/papers/contract-form/guideline";
 import Checklist from "components/papers/contract-form/checklist";
 import { updateNewContract } from "helpers/papers/new-contract/updateNewContract";
 
-export interface IsReadVO {
-  policy: boolean;
-  agree: boolean;
-  schedule: boolean;
-  guideline: boolean;
-  checklist: boolean;
-  validationError: string;
-}
-export const defaultIsRead: IsReadVO = {
-  policy: false,
-  agree: false,
-  schedule: false,
-  guideline: false,
-  checklist: false,
-  validationError: "",
-};
+
 
 export default function ContractForm() {
   const router = useRouter();
@@ -84,7 +71,7 @@ export default function ContractForm() {
         }
       }
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   };
 
@@ -104,7 +91,7 @@ export default function ContractForm() {
           }
         );
       } catch (error) {
-        console.log(error);
+        alert(error);
       } finally {
         setIsLoading(false);
       }
@@ -201,7 +188,6 @@ export default function ContractForm() {
             setIsSubmitDisabled={setIsSubmitDisabled}
           />
         </div>
-
         <div className="btn-wrap">
           {isRead.validationError && <div>{isRead.validationError}</div>}
           <button type="button">cancel</button>

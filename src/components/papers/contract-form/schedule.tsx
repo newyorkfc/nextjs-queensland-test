@@ -1,3 +1,6 @@
+import { IsReadEnum } from "app/papers/new-contract/model";
+import { updateIsRead } from "helpers/papers/new-contract/updateIsRead";
+
 export default function Schedule({
   contractForm,
   isRead,
@@ -9,6 +12,10 @@ export default function Schedule({
   const formattedDate = `${String(today.getDate()).padStart(2, "0")}/${String(
     today.getMonth() + 1
   ).padStart(2, "0")}/${today.getFullYear()}`;
+
+  const handleScheduleIsRead = () => {
+    updateIsRead(isRead, setIsRead, setIsSubmitDisabled, IsReadEnum.schedule);
+  };
 
   return (
     <section className="paper schedule">
@@ -73,24 +80,7 @@ export default function Schedule({
               type="checkbox"
               id="scheduleIsRead"
               value={isRead.schedule}
-              onChange={() => {
-                if (
-                  isRead.policy &&
-                  isRead.agree &&
-                  isRead.schedule === false &&
-                  isRead.guideline &&
-                  isRead.checklist
-                ) {
-                  setIsSubmitDisabled(false);
-                  setIsRead({
-                    ...isRead,
-                    schedule: !isRead.schedule,
-                    validationError: "",
-                  });
-                } else {
-                  setIsRead({ ...isRead, schedule: !isRead.schedule });
-                }
-              }}
+              onChange={handleScheduleIsRead}
             />
             <label htmlFor="scheduleIsRead">I have read and understood.</label>
           </div>

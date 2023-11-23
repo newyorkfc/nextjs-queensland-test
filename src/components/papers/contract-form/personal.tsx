@@ -155,8 +155,8 @@ export default function Personal({
         const response = await axios.get(`/api/suburbs?q=${value}`);
         setSuburbs(response.data);
       } catch (error) {
-        console.error(error);
         setSuburbs([]);
+        alert(error);
       }
     } else {
       setSuburbs([]);

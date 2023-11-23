@@ -68,3 +68,50 @@ export interface WorkerViewVO {
   farmNumber: string | null;
   memo: string | null;
 }
+
+export enum WorkerViewEnum {
+  id = "id",
+  createdAt = "createdAt",
+  updatedAt = "updatedAt",
+  locationId = "locationId",
+  locationName = "locationName",
+  farmId = "farmId",
+  farmName = "farmName",
+  teamId = "teamId",
+  teamName = "teamName",
+  firstName = "firstName",
+  lastName = "lastName",
+  englishName = "englishName",
+  bsb = "bsb",
+  accountNumber = "accountNumber",
+  email = "email",
+  cellPhone = "cellPhone",
+  taxFileNumber = "taxFileNumber",
+  birthDate = "birthDate",
+  gender = "gender",
+  nationality = "nationality",
+  passportNumber = "passportNumber",
+  visaGrantNumber = "visaGrantNumber",
+  fundName = "fundName",
+  memberNumber = "memberNumber",
+  address = "address",
+  startDate = "startDate",
+  endDate = "endDate",
+  tax = "tax",
+  farmNumber = "farmNumber",
+  memo = "memo",
+}
+
+export type WorkerSortOrder = "asc" | "desc" | "";
+
+export type WorkerSearchParam = "all" | "team" | "name";
+
+export interface WorkerFilterVO {
+  searchParam: WorkerSearchParam;
+  searchKeyword: string;
+}
+
+export const defaultWorkerFilter: WorkerFilterVO = {
+  searchParam: "all",
+  searchKeyword: "",
+};

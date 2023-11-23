@@ -16,7 +16,7 @@ export default function CompanyList() {
         );
         setCompanies(response.data.array);
       } catch (error) {
-        console.log(error);
+        alert(error);
       } finally {
         setIsLoading(false);
       }

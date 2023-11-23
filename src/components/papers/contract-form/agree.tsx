@@ -1,3 +1,6 @@
+import { IsReadEnum } from "app/papers/new-contract/model";
+import { updateIsRead } from "helpers/papers/new-contract/updateIsRead";
+
 export default function Agree({
   newContract,
   contractForm,
@@ -10,6 +13,10 @@ export default function Agree({
   const formattedDate = `${String(today.getDate()).padStart(2, "0")}/${String(
     today.getMonth() + 1
   ).padStart(2, "0")}/${today.getFullYear()}`;
+
+  const handleAgreeIsRead = () => {
+    updateIsRead(isRead, setIsRead, setIsSubmitDisabled, IsReadEnum.agree);
+  };
 
   return (
     <section className="paper">
@@ -57,20 +64,7 @@ export default function Agree({
               type="checkbox"
               id="agreeIsRead"
               value={isRead.agree}
-              onChange={() => {
-                if (
-                  isRead.policy &&
-                  isRead.agree === false &&
-                  isRead.schedule &&
-                  isRead.guideline &&
-                  isRead.checklist
-                ) {
-                  setIsSubmitDisabled(false);
-                  setIsRead({ ...isRead, agree: !isRead.agree, validationError: "" });
-                } else {
-                  setIsRead({ ...isRead, agree: !isRead.agree });
-                }
-              }}
+              onChange={handleAgreeIsRead}
             />
             <label htmlFor="agreeIsRead">
               I have read and understood the above agreement.
