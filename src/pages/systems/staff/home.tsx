@@ -15,6 +15,9 @@ export default function StaffHome() {
         <li>
           <button onClick={()=>{router.push("/customers/worker/list")}}>Manage Workers</button>
         </li>
+        <li>
+          <button onClick={()=>{router.push("/papers/contract-form/edit")}}>Manage Contract Form</button>
+        </li>
       </ul>
     </>
   );

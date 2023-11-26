@@ -5,6 +5,8 @@ export interface ContractVO {
   createdAt: string | null;
   updatedAt: string | null;
   workerId: string | null;
+  farmId: string | null;
+  formVersionId: string | null;
   personalDetail: PersonalDetailVO | null;
   healthChecklist: HealthChecklistVO | null;
 }
@@ -80,4 +82,17 @@ export interface MedicalConditionVO {
   highBloodPressure: string | null;
   other: string | null;
   healthChecklistId: string | null;
+}
+
+export interface StateVO {
+  name: string | null;
+  abbreviation: string | null;
+}
+export interface SuburbVO {
+  name: string | null;
+  postcode: number | null;
+  state: StateVO | null;
+  locality: string | null;
+  latitude: number | null;
+  longtiude: number | null;
 }

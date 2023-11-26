@@ -16,7 +16,7 @@ export default function CompanyList() {
         );
         setCompanies(response.data.array);
       } catch (error) {
-        console.log(error);
+        alert(error);
       } finally {
         setIsLoading(false);
       }
@@ -41,7 +41,7 @@ export default function CompanyList() {
         </thead>
         <tbody>
           {companies.map((company, index) => {
-            const url = `${process.env.NEXT_PUBLIC_FRONT_URL}/systems/company/${company.name}`;
+            const url = `${process.env.NEXT_PUBLIC_FRONT_URL}/papers/contract-form/${company.name}`;
             return (
               <tr key={index} id={company.id}>
                 <td>{company.name}</td>

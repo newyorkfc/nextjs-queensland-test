@@ -1,42 +1,26 @@
-import { FormPolicyVO } from "app/papers/contract-form/model";
-import axios from "axios";
-import NavigationButton from "components/papers/contract-form/navigation-button";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { IsReadEnum } from "app/papers/new-contract/model";
+import { updateIsRead } from "helpers/papers/new-contract/updateIsRead";
 
-export default function Policy() {
-  const router = useRouter();
-  const companyName = router.query.companyName;
-  const [formPolicies, setFormPolicies] = useState<Array<FormPolicyVO>>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/papers/contract-form?by=policy`
-        );
-        setFormPolicies(response.data.array);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+export default function Policy({
+  contractForm,
+  isRead,
+  setIsRead,
+  isSubmitDisabled,
+  setIsSubmitDisabled,
+}) {
+  const midIndex = Math.ceil(contractForm.policyArray.length / 2);
+  const firstHalfPolicies = contractForm.policyArray.slice(0, midIndex);
+  const secondHalfPolicies = contractForm.policyArray.slice(midIndex);
 
-  const midIndex = Math.ceil(formPolicies.length / 2);
-  const firstHalfPolicies = formPolicies.slice(0, midIndex);
-  const secondHalfPolicies = formPolicies.slice(midIndex);
+  const handlePolicyIsRead = () => {
+    updateIsRead(isRead, setIsRead, setIsSubmitDisabled, IsReadEnum.policy);
+  };
 
   return (
     <section className="paper">
       <div className="container">
         <div className="tit-area">
-          <h1 className="h1">{companyName} Policies</h1>
+          <h1 className="h1">{contractForm.company.name} Policies</h1>
         </div>
         <div className="content">
           <div className="col-wrap">
@@ -82,16 +66,16 @@ export default function Policy() {
             </div>
           </div>
           <div className="agree-wrap">
-            <input type="checkbox" id="check1" />
-            <label htmlFor="check1">
+            <input
+              type="checkbox"
+              id="policyIsRead"
+              value={isRead.policy}
+              onChange={handlePolicyIsRead}
+            />
+            <label htmlFor="policyIsRead">
               By checking here, I declare that I will abide by company policies.
             </label>
           </div>
-          <NavigationButton
-            prevPath={`/papers/contract-form/${companyName}/personal`}
-            nextPath={`/papers/contract-form/${companyName}/agree`}
-            currentPage={3}
-          />
         </div>
       </div>
     </section>
