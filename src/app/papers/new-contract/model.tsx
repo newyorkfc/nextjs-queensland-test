@@ -13,8 +13,10 @@ import {
 } from "../contract/model";
 import { BankDetailVO } from "app/taxes/bank-detail/model";
 import { FarmVO, LocationVO } from "app/customers/farm/model";
+import { FormVersionVO } from "../contract-form/model";
 
 export interface NewContractVO {
+  formVersion: FormVersionVO | null;
   company: CompanyVO | null;
   location: LocationVO | null;
   farm: FarmVO | null;
@@ -34,6 +36,7 @@ export interface NewContractVO {
 }
 
 export enum NewContractEnum {
+  formVersion = "formVersion",
   newContract = "newContract",
   company = "company",
   location = "location",
@@ -54,6 +57,12 @@ export enum NewContractEnum {
 }
 
 export const defaultNewContract: NewContractVO = {
+  formVersion: {
+    id: null,
+    createdAt: null,
+    updatedAt: null,
+    isMain: null,
+  },
   company: {
     id: null,
     createdAt: null,
@@ -119,6 +128,7 @@ export const defaultNewContract: NewContractVO = {
     updatedAt: null,
     workerId: null,
     farmId: null,
+    formVersionId:  null,
     personalDetail: null,
     healthChecklist: null,
   },

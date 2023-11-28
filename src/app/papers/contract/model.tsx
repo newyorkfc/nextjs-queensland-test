@@ -6,6 +6,7 @@ export interface ContractVO {
   updatedAt: string | null;
   workerId: string | null;
   farmId: string | null;
+  formVersionId: string | null;
   personalDetail: PersonalDetailVO | null;
   healthChecklist: HealthChecklistVO | null;
 }

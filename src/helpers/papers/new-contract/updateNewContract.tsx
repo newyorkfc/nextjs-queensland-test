@@ -1,4 +1,4 @@
-import { NewContractEnum, NewContractVO } from "app/papers/new-contract/model";
+import { NewContractVO } from "app/papers/new-contract/model";
 import { Dispatch, SetStateAction } from "react";
 
 export const updateNewContract = (
@@ -12,5 +12,4 @@ export const updateNewContract = (
     [fieldKey]: { ...newContract[fieldKey], ...updatedField },
   };
   setNewContract(updatedNewContract);
-  // sessionStorage.setItem(NewContractEnum.newContract, JSON.stringify(updatedNewContract));
 };

@@ -223,9 +223,9 @@ export default function WorkerTable({ workers }: { workers: WorkerViewVO[] }) {
                   <td id={worker.teamId}>{worker.teamName}</td>
                   <td
                     className="tal"
-                    // onClick={() => {
-                    //   router.push(`/customers/worker/${worker.id}`);
-                    // }}
+                    onClick={() => {
+                      router.push(`/customers/worker/${worker.id}`);
+                    }}
                   >
                     {worker.firstName + " " + worker.lastName}
                   </td>

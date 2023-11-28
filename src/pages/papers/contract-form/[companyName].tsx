@@ -19,9 +19,6 @@ import Agree from "components/papers/contract-form/agree";
 import Schedule from "components/papers/contract-form/schedule";
 import Guideline from "components/papers/contract-form/guideline";
 import Checklist from "components/papers/contract-form/checklist";
-import { updateNewContract } from "helpers/papers/new-contract/updateNewContract";
-
-
 
 export default function ContractForm() {
   const router = useRouter();
@@ -82,14 +79,14 @@ export default function ContractForm() {
           `${process.env.NEXT_PUBLIC_SERVER_URL}/papers/contract-form?by=all&company=${companyName}`
         );
         setContractForm(response.data.json);
-        updateNewContract(
-          newContract,
-          setNewContract,
-          NewContractEnum.company,
-          {
-            name: companyName,
-          }
-        );
+        setNewContract({
+          ...newContract,
+          company: { ...newContract.company, name: companyName.toString() },
+          formVersion: {
+            ...newContract.formVersion,
+            id: response.data.json.version.id,
+          },
+        });
       } catch (error) {
         alert(error);
       } finally {
