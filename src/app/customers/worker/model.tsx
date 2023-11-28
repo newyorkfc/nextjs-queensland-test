@@ -1,15 +1,21 @@
 import { OrderVO } from "app/orders/order/model";
 import { ContractVO } from "app/papers/contract/model";
 
+export type titleType = "Mr" | "Mrs" | "Miss" | "Ms";
+export const titleTypes: titleType[] = ["Mr", "Mrs", "Miss", "Ms"];
+
+export type genderType = "Male" | "Female";
+export const genderTypes: genderType[] = ["Male", "Female"];
+
 export interface WorkerVO {
   id: string | null;
   createdAt: string | null;
   updatedAt: string | null;
-  title: string | null;
+  title: titleType | null;
   firstName: string | null;
   lastName: string | null;
   englishName: string | null;
-  gender: string | null;
+  gender: genderType | null;
   birthDate: string | null;
   teamId: string | null;
   passport: PassportVO | null;

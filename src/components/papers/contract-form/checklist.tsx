@@ -13,24 +13,24 @@ export default function Checklist({
   setIsSubmitDisabled,
 }) {
   const [answers, setAnswers] = useState({
-    preExistingMedicalCondition: "",
-    takingMedication: "",
-    recentSurgery: "",
-    recentInjury: "",
-    jobRelatedLimitation: "",
-    jobStress: "",
-    mentalCounseling: "",
-    awareOfEap: "",
-    awareOfSafetyPolicy: "",
-    firstAidTraining: "",
-    safetyReportingComfort: "",
-    beeSting: "",
-    epilepsy: "",
-    diabetes: "",
-    pregnant: "",
-    highBloodPressure: "",
-    other: "",
-    extraDisclosure: "",
+    preExistingMedicalCondition: newContract.generalHealth.preExistingMedicalCondition || "",
+    takingMedication: newContract.generalHealth.takingMedication || "",
+    recentSurgery: newContract.generalHealth.recentSurgery || "",
+    recentInjury: newContract.generalHealth.recentInjury || "",
+    jobRelatedLimitation: newContract.generalHealth.jobRelatedLimitation || "",
+    jobStress: newContract.mentalHealth.jobStress || "",
+    mentalCounseling: newContract.mentalHealth.mentalCounseling || "",
+    awareOfEap: newContract.mentalHealth.awareOfEap || "",
+    awareOfSafetyPolicy: newContract.safetyAware.awareOfSafetyPolicy || "",
+    firstAidTraining: newContract.safetyAware.firstAidTraining || "",
+    safetyReportingComfort: newContract.safetyAware.safetyReportingComfort || "",
+    beeSting: newContract.medicalCondition.beeSting || "",
+    epilepsy: newContract.medicalCondition.epilepsy || "",
+    diabetes: newContract.medicalCondition.diabetes || "",
+    pregnant: newContract.medicalCondition.pregnant || "",
+    highBloodPressure: newContract.medicalCondition.highBloodPressure || "",
+    other: newContract.medicalCondition.other || "",
+    extraDisclosure: newContract.healthChecklist.extraDisclosure || "",
   });
 
   const handleAnswerChange = (shortName) => (e) => {
@@ -290,6 +290,7 @@ export default function Checklist({
               id="ohter"
               className="input-box"
               onChange={handleAnswerChange("other")}
+              value={answers.other}
             />
           </div>
           <div className="comment">
@@ -309,6 +310,7 @@ export default function Checklist({
               className="input-box"
               id="extraDisclosure"
               onChange={handleAnswerChange("extraDisclosure")}
+              value={answers.extraDisclosure}
             />
             <span>
               These rules are to protect the health and safety of all our

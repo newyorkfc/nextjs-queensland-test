@@ -1,3 +1,4 @@
+import { genderTypes, titleTypes } from "app/customers/worker/model";
 import { ContractFormVO } from "app/papers/contract-form/model";
 import { SuburbVO } from "app/papers/contract/model";
 import { NewContractEnum, NewContractVO } from "app/papers/new-contract/model";
@@ -14,13 +15,10 @@ export default function Personal({
   setNewContract: Dispatch<SetStateAction<NewContractVO>>;
   contractForm: ContractFormVO;
 }) {
-  const [selectedLocationId, setSelectedLocationId] = useState(null);
-  const [selectedGender, setSelectedGender] = useState("");
-
   const [address, setAddress] = useState(
-    newContract.contract.personalDetail?.address || ""
+    newContract.personalDetail?.address || ""
   );
-  const [suburbQuery, setSuburbQuery] = useState("");
+  const [suburbQuery, setSuburbQuery] = useState(newContract.personalDetail.address?.split(", ")[1] || "");
   const [suburbs, setSuburbs] = useState<Array<SuburbVO | null>>([]);
   const [selectedSuburb, setSelectedSuburb] = useState<SuburbVO | null>(null);
 
@@ -31,7 +29,6 @@ export default function Personal({
   };
 
   const handleLocationChange = (e) => {
-    setSelectedLocationId(Number(e.target.value));
     updateNewContract(newContract, setNewContract, NewContractEnum.location, {
       id: e.target.value,
     });
@@ -65,7 +62,6 @@ export default function Personal({
     updateNewContract(newContract, setNewContract, NewContractEnum.worker, {
       gender: e.target.value,
     });
-    setSelectedGender(e.target.value);
   };
 
   const handleBirthDateChange = (field, value) => {
@@ -292,7 +288,7 @@ export default function Personal({
             <dt>Title</dt>
             <dd>
               <div className="radio-box">
-                {["Mr", "Mrs", "Miss", "Ms"].map((title) => (
+                {titleTypes.map((title) => (
                   <label key={title}>
                     <input
                       type="radio"
@@ -308,9 +304,13 @@ export default function Personal({
             </dd>
           </dl>
           <dl>
-            <dt>Location</dt>
+            <dt>Location </dt>
             <dd>
-              <select id="locationId" onChange={handleLocationChange}>
+              <select
+                id="locationId"
+                onChange={handleLocationChange}
+                value={newContract.location.id}
+              >
                 <option>select</option>
                 {contractForm.locationArray.map((location) => (
                   <option key={location.id} value={location.id}>
@@ -323,11 +323,18 @@ export default function Personal({
           <dl>
             <dt>Farm</dt>
             <dd>
-              <select id="farmId" onChange={handleFarmChange}>
+              <select
+                id="farmId"
+                onChange={handleFarmChange}
+                value={newContract.farm.id}
+              >
                 <option>select</option>
-                {selectedLocationId &&
+                {newContract.location.id &&
                   contractForm.locationArray
-                    .find((loc) => loc.id === selectedLocationId)
+                    .find(
+                      (loc) =>
+                        Number(loc.id) === Number(newContract.location.id)
+                    )
                     .farmArray.map((farm) => (
                       <option key={farm.id} value={farm.id}>
                         {farm.name}
@@ -346,6 +353,7 @@ export default function Personal({
                 className="input-box md"
                 id="firstName"
                 onChange={handleFirstNameChange}
+                value={newContract.worker.firstName}
               />
             </dd>
             <dt>
@@ -357,6 +365,7 @@ export default function Personal({
                 className="input-box md"
                 id="lastName"
                 onChange={handleLastNameChange}
+                value={newContract.worker.lastName}
               />
             </dd>
           </dl>
@@ -370,18 +379,19 @@ export default function Personal({
                 className="input-box md"
                 id="englishName"
                 onChange={handleEnglishNameChange}
+                value={newContract.worker.englishName}
               />
             </dd>
             <dt>Gender</dt>
             <dd>
               <div className="radio-box">
-                {["Male", "Female"].map((gender) => (
+                {genderTypes.map((gender) => (
                   <label key={gender}>
                     <input
                       type="radio"
                       id="gender"
                       value={gender}
-                      checked={selectedGender === gender}
+                      checked={gender === newContract.worker.gender}
                       onChange={handleGenderChange}
                     />
                     <span>{gender}</span>
@@ -400,6 +410,7 @@ export default function Personal({
                 placeholder="day"
                 maxLength={2}
                 onChange={(e) => handleBirthDateChange("day", e.target.value)}
+                value={newContract.worker.birthDate?.split("/")[0]}
               />
               <span>/</span>
               <input
@@ -407,6 +418,7 @@ export default function Personal({
                 placeholder="month"
                 maxLength={2}
                 onChange={(e) => handleBirthDateChange("month", e.target.value)}
+                value={newContract.worker.birthDate?.split("/")[1]}
               />
               <span>/</span>
               <input
@@ -415,6 +427,7 @@ export default function Personal({
                 placeholder="year"
                 maxLength={4}
                 onChange={(e) => handleBirthDateChange("year", e.target.value)}
+                value={newContract.worker.birthDate?.split("/")[2]}
               />
             </dd>
           </dl>
@@ -428,6 +441,7 @@ export default function Personal({
                 className="input-box"
                 id="cellPhone"
                 onChange={handleCellPhoneChange}
+                value={newContract.personalDetail.cellPhone}
               />
             </dd>
           </dl>
@@ -441,6 +455,7 @@ export default function Personal({
                 className="input-box"
                 id="email"
                 onChange={handleEmailCahange}
+                value={newContract.personalDetail.email}
               />
             </dd>
           </dl>
@@ -457,6 +472,7 @@ export default function Personal({
                 onChange={(e) => {
                   handleAddressChange("street", e.target.value);
                 }}
+                value={newContract.personalDetail.address?.split(", ")[0] || ""}
               ></input>
             </dd>
             <dd className="flex">
@@ -547,6 +563,7 @@ export default function Personal({
                 className="input-box"
                 id="taxFileNumber"
                 onChange={handleTaxFileNumberChange}
+                value={newContract.personalDetail.taxFileNumber}
               />
             </dd>
           </dl>
@@ -560,6 +577,7 @@ export default function Personal({
                 className="input-box"
                 id="visaGrantNumber"
                 onChange={handleVisaGrantNumberChange}
+                value={newContract.passport.visaGrantNumber}
               />
             </dd>
           </dl>
@@ -573,6 +591,7 @@ export default function Personal({
                 className="input-box"
                 id="visaExpireDate"
                 onChange={handleVisaExpireDateChange}
+                value={newContract.passport.visaExpireDate}
               />
             </dd>
           </dl>
@@ -586,6 +605,7 @@ export default function Personal({
                 className="input-box"
                 id="nationality"
                 onChange={handleNationalityChange}
+                value={newContract.passport.nationality}
               />
             </dd>
           </dl>
@@ -599,6 +619,7 @@ export default function Personal({
                 className="input-box"
                 id="passportNumber"
                 onChange={handlepassportNumberChange}
+                value={newContract.passport.passportNumber}
               />
             </dd>
           </dl>
@@ -613,6 +634,7 @@ export default function Personal({
                 className="input-box"
                 id="emergencyContactName"
                 onChange={handleEmergencyContactName}
+                value={newContract.emergencyContact.name}
               />
             </dd>
           </dl>
@@ -626,6 +648,7 @@ export default function Personal({
                 className="input-box"
                 id="emergencyContactCellPhone"
                 onChange={handleEmergencyContactCellPhoneChange}
+                value={newContract.emergencyContact.cellPhone}
               />
             </dd>
           </dl>
@@ -640,6 +663,7 @@ export default function Personal({
                 className="input-box"
                 id="fundName"
                 onChange={handleFundNameChange}
+                value={newContract.superannuation.fundName}
               />
             </dd>
           </dl>
@@ -653,6 +677,7 @@ export default function Personal({
                 className="input-box"
                 id="memberNumber"
                 onChange={handleMemberNumberChange}
+                value={newContract.superannuation.memberNumber}
               />
             </dd>
           </dl>
@@ -667,6 +692,7 @@ export default function Personal({
                 className="input-box"
                 id="bankName"
                 onChange={handleBankNameChange}
+                value={newContract.bankDetail.bankName}
               />
             </dd>
           </dl>
@@ -680,6 +706,7 @@ export default function Personal({
                 className="input-box"
                 id="accountName"
                 onChange={handleAccountNameChange}
+                value={newContract.bankDetail.accountName}
               />
             </dd>
           </dl>
@@ -693,6 +720,7 @@ export default function Personal({
                 className="input-box"
                 id="bsb"
                 onChange={handleBsbChange}
+                value={newContract.bankDetail.bsb}
               />
             </dd>
           </dl>
@@ -706,6 +734,7 @@ export default function Personal({
                 className="input-box"
                 id="accountNumber"
                 onChange={handleAccountNumberChange}
+                value={newContract.bankDetail.accountNumber}
               />
             </dd>
           </dl>

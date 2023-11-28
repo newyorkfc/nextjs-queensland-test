@@ -1,11 +1,19 @@
-export function convertTimeToAuFormat(dateStr: string | null): string | null {
+export function convertDateToAuFormat(dateStr: string | null): string | null {
   if (dateStr === null || dateStr === "") {
     return null;
   }
   const date = new Date(dateStr);
-  const day = date.getDate().toString().padStart(2, "0");
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
   const year = date.getFullYear();
 
   return `${day}/${month}/${year}`;
+}
+
+export function convertDateFromAuFormat(dateStr: string): string {
+  const parts = dateStr.split("/");
+  const day = parts[0];
+  const month = parts[1];
+  const year = parts[2];
+  return `${year}-${month}-${day}`;
 }

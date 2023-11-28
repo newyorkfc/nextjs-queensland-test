@@ -30,8 +30,9 @@ export default function ContractFormEdit() {
           alert(
             "Successfully updated the contract form. Please refresh the page to see the changes."
           );
+          window.location.reload();
         } else {
-          alert(response.data);
+          alert(JSON.stringify(response.data));
         }
       }
     } catch (error) {
